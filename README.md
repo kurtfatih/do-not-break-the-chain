@@ -42,8 +42,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Firebase
 
 As database the project uses Firebase / NOSQL && Firebase Auth
+
 1.change name from env.local.change to .env
+
 2.get the certain credentials from "Firebase Consol" and paste into .env
+
 3.update the certain variable
+
 4.activate auth providers -Google Provider,Email Provider- in Firebase Console
+
 4.yarn start
