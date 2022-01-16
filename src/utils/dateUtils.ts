@@ -7,7 +7,6 @@ export const parseTheDate = (date: Date) => {
     const month = date.getMonth();
     const day = date.getDate();
     const hour = date.getHours();
-    // console.log('Day', day, year, month, date.getDate());
     return { year, month, day, hour };
 };
 
@@ -75,7 +74,6 @@ const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 // a and b are javascript Date objects
 export function dateDiffInDays(firstDate: Date, secondDate: Date) {
     // Discard the time and time-zone information.
-    // console.log('b', b);
     const utc1 = Date.UTC(
         firstDate.getFullYear(),
         firstDate.getMonth(),

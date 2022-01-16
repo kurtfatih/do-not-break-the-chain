@@ -10,7 +10,6 @@ import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
 export const LoginPage: React.FC = () => {
-    console.log('login page rendered');
     const { isUserLoading, isUserLoggedIn } = useUserContext();
     const [isSignIn, setIsSignIn] = React.useState(true);
     const changeScreenBetweenSignInSignUpForm = () => {

@@ -33,7 +33,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         const password = passwordInputRef.current.value;
         const displayName = displayNameInputRef.current.value;
         if (!email || !password) return;
-        console.log('handle', email, password, displayName);
         createUserWithEmailPasswordAndDisplayName(email, password, displayName);
     };
     return (

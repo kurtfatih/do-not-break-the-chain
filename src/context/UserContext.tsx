@@ -55,7 +55,7 @@ export const UserContextProvider: React.FC = ({ children }) => {
                 return res;
             })
             .catch((error) => {
-                console.log('error occured when sign out ', error);
+                alert(error);
                 // An error happened.
             });
 
@@ -104,7 +104,6 @@ export const UserContextProvider: React.FC = ({ children }) => {
     React.useEffect(() => {
         setIsUserLoading(true);
         const unlisten = auth.onAuthStateChanged((authUser) => {
-            console.log(authUser);
             // localStorage.setItem('user', authUser.uid);
             setUser(authUser);
             setIsUserLoading(false);
@@ -115,10 +114,8 @@ export const UserContextProvider: React.FC = ({ children }) => {
         };
     }, []);
     React.useEffect(() => {
-        console.log('fired authuser');
         setIsUserLoading(true);
         const unlisten = auth.onAuthStateChanged((authUser) => {
-            console.log('fire', authUser);
             // localStorage.setItem('user', authUser.uid);
             setUser(authUser);
             setIsUserLoading(false);

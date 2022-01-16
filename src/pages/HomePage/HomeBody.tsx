@@ -1,14 +1,12 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 import MouseCursor from '../../assets/mousecursor.png';
 import { Image } from '../../components/Image';
 import { SmallFont } from '../../components/Typography';
 import { UnOrderedList } from '../../components/UnOrderedList';
 import { todayDays } from '../../constants/dateConstant';
-import { breakPoints } from '../../constants/stylesConstant';
 import { generateArrayFromNumber } from '../../utils/arrUtils';
 import { Day } from '../AppPage/DayItem';
 import { DaysCardContainer } from '../AppPage/GoalContent';
@@ -21,7 +19,6 @@ import { DaysCardContainer } from '../AppPage/GoalContent';
 // `;
 const days = generateArrayFromNumber(31);
 const dummyDaysObj = days.map((day) => {
-    console.log(day, todayDays);
     if (day === todayDays) {
         const obj = {
             isSelected: false,
@@ -55,8 +52,6 @@ const dummyDaysObj = days.map((day) => {
     };
 });
 const missedDays = todayDays - 1;
-
-console.log(dummyDaysObj);
 
 export const HomeBody: React.FC = () => {
     const navigate = useNavigate();

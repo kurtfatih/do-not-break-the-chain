@@ -7,7 +7,6 @@ export const replaceObjInsideArrayWithExistOneByYear = <
     const newElements = arr.map((obj) => {
         const getIfGoalDataExist = obj.year === newObj.year;
         const newobj = getIfGoalDataExist ? newObj : obj;
-        console.log('new obj', newobj);
         return newobj;
     });
     return newElements;

@@ -6,7 +6,6 @@ import { HomeFooter } from './HomeFooter';
 import { HomeHeader } from './HomeHeader';
 
 export const HomePage: React.FC = () => {
-    console.log('Home rendered');
     return (
         <Grid
             id="home-page-container"

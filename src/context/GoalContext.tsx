@@ -86,7 +86,6 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         if (goalTexts?.length === 0 || !goalTexts) return;
         const goalTextObj = goalTexts.filter(({ year }) => year === activeYear);
         if (goalTextObj.length === 0) return;
-        // console.log(activeYear, goalTexts);
         const goalText = goalTextObj[goalTextObj.length - 1].text;
         return goalText;
     };

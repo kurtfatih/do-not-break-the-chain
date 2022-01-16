@@ -6,7 +6,6 @@ import { useGoalContext } from '../../context/GoalContext';
 import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
 
 const GoalNameForm: React.FC = () => {
-    console.log('goalForm rendered');
     const { activeYear, goalData } = useDateContext();
     const goalNameInputRef = React.useRef('');
     const { getTheGoalTextByActiveYear, updateGoal } = useGoalContext();
@@ -37,7 +36,6 @@ const GoalNameForm: React.FC = () => {
         );
 
         if (isYearHasGoalNameAlready) {
-            console.log('yes updated');
             const newObj = {
                 year: activeYear,
                 text: activeGoalName,

@@ -10,7 +10,6 @@ import { SmallFont } from '../../components/Typography';
 import { useDateContext } from '../../context/DateContext';
 
 export const GoalYearForm: React.FC = () => {
-    console.log('year form rendereder');
     const { changeYear, activeYear, activeMonthName } = useDateContext();
     const [openYearDialog, setOpenYearDialog] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null);

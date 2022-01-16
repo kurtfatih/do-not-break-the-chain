@@ -19,7 +19,6 @@ interface SignInFormProps {
 const SignInForm: React.FC<SignInFormProps> = ({
     changeScreenBetweenSignInSignUpForm,
 }) => {
-    console.log('signinform rendered');
     const emailInputRef = React.useRef<HTMLInputElement>(null);
     const passwordInputRef = React.useRef<HTMLInputElement>(null);
     const { isUserLoading, signInWithGoogle, signInWithPasswordAndEmail } =

@@ -1,4 +1,4 @@
-import { getNumberOfDaysInMonth, parseTheDate } from '../utils/dateUtils';
+import { parseTheDate } from '../utils/dateUtils';
 
 export const months = [
     'January',

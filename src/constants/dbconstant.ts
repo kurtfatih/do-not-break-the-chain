@@ -50,7 +50,6 @@ export const defaultGoalData: goalType = {
 // const daysv2 = dummyConstantData.goals.map((goalObj) =>
 //   goalObj.monthanddays.find(({ year }) => year === 2022)
 // )
-// console.log("daysv2", daysv2)
 // years: [2022, 2021],
 // goalTexts: [
 //   { year: 2022, text: "" },

@@ -95,10 +95,8 @@ const DayItem: React.FC<DayItemProps> = ({
 
         // const isYearAndMonthHasAlreadySelectedDayBefore =
         //     goalData.selectedDaysInTheMonth.some(({ year }) =>
-        //         console.log(year === activeYear),
         //     );
 
-        // console.log('is year', isYearAndMonthHasAlreadySelectedDayBefore);
         // const newSelectedDay = {year:activeYear,month:activeIndexOfMonth,days:[...goalData.selectedDaysInTheMonth,]}
         // updateGoal({selectedDaysInTheMonth:[...goalData.selectedDaysInTheMonth,]})
         return setIsSelectedLocal(true);
