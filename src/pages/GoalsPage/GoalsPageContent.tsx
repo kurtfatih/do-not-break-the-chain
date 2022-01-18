@@ -7,21 +7,31 @@ import { Card } from '../../components/Card';
 import { SmallFont } from '../../components/Typography';
 import { goalDataType } from '../../constants/dbconstant';
 import { breakPoints, greenColor } from '../../constants/stylesConstant';
+import { useNavigateTo } from '../../hooks/useNavigateTo';
 import { truncateString } from '../../utils/stringUtils';
 
 interface GoalsPageContentProps {
     allGoals: goalDataType[];
     addNewGoal: () => void;
     deleteGoal: (goalId: string) => void;
-    navigateToGoalPage: (goal: goalDataType) => void;
 }
 
 const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
     addNewGoal,
     allGoals,
     deleteGoal,
-    navigateToGoalPage,
 }) => {
+    const {goTo} = useNavigateTo();
+    const handleClick = (goal: goalDataType) => {
+        const link = `/goal/${goal.goalId}/${
+            goal.years[goal.years.length - 1]
+        }${
+            goal.selectedDaysInTheMonth.length > 0
+                ? '/' + goal.selectedDaysInTheMonth[0].month
+                : ''
+        }`;
+        goTo(link);
+    };
     return (
         <GoalsPageContainer>
             <GoalsContentsContainer id="goals-contents ">
@@ -29,7 +39,7 @@ const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
                     <GoalItemContainer id="goal-item-container" key={index}>
                         <GoalItemMain
                             id="goal-item-main"
-                            onClick={() => navigateToGoalPage(goal)}
+                            onClick={() => handleClick(goal)}
                         >
                             <Card
                                 style={{
