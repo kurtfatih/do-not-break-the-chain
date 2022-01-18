@@ -7,7 +7,7 @@ import HeartImage from '../../assets/hearth.png';
 import { CardContainer } from '../../components/Card';
 import { Image } from '../../components/Image';
 import { SmallFont } from '../../components/Typography';
-import { breakPoints } from '../../constants/stylesConstant';
+import { breakPoints } from '../../constants/stylesConstants';
 
 const HomeFooterCardContainer = styled(CardContainer)`
     width: 100%;

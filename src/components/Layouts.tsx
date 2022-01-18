@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { backgroundColor } from '../constants/stylesConstant';
+import { backgroundColor } from '../constants/stylesConstants';
 
 export const Body = styled.section`
     display: flex;

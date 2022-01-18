@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Card } from '../../components/Card';
 import { SmallFont } from '../../components/Typography';
-import { goalDataType } from '../../constants/dbconstant';
-import { breakPoints, greenColor } from '../../constants/stylesConstant';
+import { goalDataType } from '../../types/dbTypes';
+import { breakPoints, greenColor } from '../../constants/stylesConstants';
 import { useNavigateTo } from '../../hooks/useNavigateTo';
 import { truncateString } from '../../utils/stringUtils';
 
@@ -21,7 +21,7 @@ const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
     allGoals,
     deleteGoal,
 }) => {
-    const {goTo} = useNavigateTo();
+    const { goTo } = useNavigateTo();
     const handleClick = (goal: goalDataType) => {
         const link = `/goal/${goal.goalId}/${
             goal.years[goal.years.length - 1]

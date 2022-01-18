@@ -14,13 +14,13 @@ import React, { useRef } from 'react';
 
 import {
     ContactDataSetType,
-    defaultGoalData,
     goalDataType,
     goalType,
     goalTypeUpdatableFieldType,
-} from '../constants/dbconstant';
+} from '../types/dbTypes';
 import { db } from '../database/firebase';
 import { useUserContext } from './UserContext';
+import { defaultGoalData } from '../constants/dbConstants';
 
 interface DbContextI {
     goalsData: goalDataType[] | null;

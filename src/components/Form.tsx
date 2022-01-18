@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { darkColor } from '../constants/stylesConstant';
+import { darkColor } from '../constants/stylesConstants';
 
 export const FormContainer = styled.form`
     display: flex;

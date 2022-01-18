@@ -20,7 +20,7 @@ import {
     greenColor,
     orangeColor,
     sidebarBackgroundColor,
-} from '../constants/stylesConstant';
+} from '../constants/stylesConstants';
 import { useUserContext } from '../context/UserContext';
 import { Image } from './Image';
 import { SmallFont } from './Typography';

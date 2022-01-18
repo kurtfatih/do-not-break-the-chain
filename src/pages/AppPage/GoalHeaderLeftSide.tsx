@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Card, CardInsideContainer } from '../../components/Card';
-import { breakPoints } from '../../constants/stylesConstant';
+import { breakPoints } from '../../constants/stylesConstants';
 import GoalNameForm from './GoalNameForm';
 import { GoalYearForm } from './GoalYearForm';
 

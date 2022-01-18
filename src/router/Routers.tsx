@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Navigation } from '../components/Navigation';
-import { backgroundColor } from '../constants/stylesConstant';
+import { backgroundColor } from '../constants/stylesConstants';
 import { Routes } from './Routes';
 
 export const Router: React.FC = () => {

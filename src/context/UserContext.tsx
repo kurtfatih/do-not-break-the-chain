@@ -12,10 +12,6 @@ import React, { createContext, useContext } from 'react';
 import { auth } from '../database/firebase';
 
 interface UserContextI {
-    // user: {
-    //     currentUser: User | null;
-    //     loading: boolean;
-    // };
     user: User | null;
     isUserLoading: boolean;
     signInWithGoogle: () => Promise<void>;

@@ -1,7 +1,7 @@
 import { CircularProgress, Dialog } from '@mui/material';
 import React from 'react';
 
-import { greenColor } from '../constants/stylesConstant';
+import { greenColor } from '../constants/stylesConstants';
 
 export const Loading: React.FC = () => {
     return (

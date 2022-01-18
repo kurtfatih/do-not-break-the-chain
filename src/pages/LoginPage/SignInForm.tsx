@@ -9,7 +9,7 @@ import {
     FormItemContainer,
 } from '../../components/Form';
 import { SmallFont } from '../../components/Typography';
-import { FormButtonStyle } from '../../constants/stylesConstant';
+import { FormButtonStyle } from '../../constants/stylesConstants';
 import { useUserContext } from '../../context/UserContext';
 import { GoogleButtonContainer } from './LoginPage';
 
