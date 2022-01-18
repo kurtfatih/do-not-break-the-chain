@@ -36,16 +36,23 @@ interface DbContextI {
         message,
     }: ContactDataSetType) => Promise<void>;
 }
+
+const collectionName =
+    process.env.NODE_ENV === 'production'
+        ? 'goals'
+        : process.env.NODE_ENV === 'development'
+        ? 'goals-dev'
+        : 'goals-test';
+
 export const DbContextProvider: React.FC = ({ children }) => {
     const { user } = useUserContext();
     const [goalsData, setGoalsData] = React.useState<goalDataType[] | null>(
         null,
     );
-
     //ref that collections document ref query by user id
     const collectionDocumentRefBasedOnUserId = useRef(
         query(
-            collection(db, 'goals'),
+            collection(db, collectionName),
             where('user', '==', user ? user.uid : ''),
             orderBy('createdAt', 'asc'),
         ),
