@@ -5,11 +5,17 @@ import styled from 'styled-components';
 import { Card } from '../../components/Card';
 // import { ContentBody } from '../../components/Layouts';
 import { UnOrderedList } from '../../components/UnOrderedList';
-import { todayDate } from '../../constants/dateConstants';
+import { nowToDate } from '../../constants/dateConstants';
 import { breakPoints } from '../../constants/stylesConstants';
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
-import { locationOfTheDateCompareToOtherDate } from '../../utils/dateUtils';
+import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
+import {
+    dateToTimestamp,
+    locationOfTheDateCompareToOtherDate,
+    parseTheDate,
+    timestampToDate,
+} from '../../utils/dateUtils';
 import DayItem from './DayItem';
 
 export const DaysCardContainer = styled(Card)`
@@ -31,27 +37,56 @@ export const GoalContent: React.FC = () => {
         isTheSelectedDayMatchWithTheDayInTheComponent,
         generateNumberArrayByNumberOfDaysInActiveMonth,
         goalData,
+        getTheSelectedDaysInMonthByActiveDate,
     } = useDateContext();
+    console.log('aa', getTheSelectedDaysInMonthByActiveDate());
+    const { updateGoal } = useGoalContext();
 
-    const { updateGoal, getTheSelectedDaysInTheMonthViaYear } =
-        useGoalContext();
+    const handleSelectDayOnClick = (dateOfTheDay: Date) => {
+        // if (!isItToday || selectedDay) return;
+        //TODO
+        // isYearAndMonthHasAlreadySelectedDayBefore
+        // if not just push into selectedDaysInTheMonth
+        // if exist keep other same push the day inside days and push
+        const dateOfTheDayDateToTimestamp = dateToTimestamp(dateOfTheDay);
+        const newObj = { date: dateOfTheDayDateToTimestamp, note: '' };
+        updateGoal(
+            {
+                selectedDays: goalData.selectedDays
+                    ? [...goalData.selectedDays, newObj]
+                    : [newObj],
+                totalSelectedDaysNumber: goalData.totalSelectedDaysNumber + 1,
+            },
+            goalData.goalId,
+        );
+    };
+
+    // const isYearAndMonthHasAlreadySelectedDayBefore =
+    //     goalData.selectedDaysInTheMonth.some(({ year }) =>
+    //     );
+
+    // const newSelectedDay = {year:activeYear,month:activeIndexOfMonth,days:[...goalData.selectedDaysInTheMonth,]}
+    // updateGoal({selectedDaysInTheMonth:[...goalData.selectedDaysInTheMonth,]})
+    // return setIsSelectedLocal(true);
 
     const arrayOfTheDayComponentsToProps =
         generateNumberArrayByNumberOfDaysInActiveMonth.map((day) => {
             const isSelected =
                 isTheSelectedDayMatchWithTheDayInTheComponent(day);
-            const activeDate = new Date(activeYear, activeIndexOfMonth, day);
+            const dayDate = new Date(activeYear, activeIndexOfMonth, day);
+            const handleClick = () => handleSelectDayOnClick(dayDate);
             const {
                 isTheDateOnTheFuture,
                 isTheDateOnThePast,
                 isTheDatesAreExactSame,
-            } = locationOfTheDateCompareToOtherDate(todayDate, activeDate);
+            } = locationOfTheDateCompareToOtherDate(nowToDate, dayDate);
             return {
                 isSelected,
                 isTheDateOnTheFuture,
                 isTheDateOnThePast,
                 isTheDatesAreExactSame,
                 day,
+                handleClick,
             };
         });
 
@@ -73,6 +108,7 @@ export const GoalContent: React.FC = () => {
                                 isTheDateOnThePast,
                                 isTheDatesAreExactSame,
                                 day,
+                                handleClick,
                             },
                             index,
                         ) => (
@@ -83,13 +119,7 @@ export const GoalContent: React.FC = () => {
                                 isItToday={isTheDatesAreExactSame}
                                 isOnThePast={isTheDateOnThePast}
                                 isOnTheFuture={isTheDateOnTheFuture}
-                                activeIndexOfMonth={activeIndexOfMonth}
-                                activeYear={activeYear}
-                                getTheSelectedDaysInTheMonthViaYear={
-                                    getTheSelectedDaysInTheMonthViaYear
-                                }
-                                goalData={goalData}
-                                updateGoal={updateGoal}
+                                handleClick={handleClick}
                             />
                         ),
                     )}

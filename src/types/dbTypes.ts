@@ -1,37 +1,28 @@
 import { Timestamp } from '@firebase/firestore';
 
-export type selectedDaysDataType = {
-    year: number;
-    month: number;
-    days: number[];
-}[];
+export type SelectedDayType = { date: Timestamp; note: string };
 
-export type goalTextsObjType = {
-    year: number;
+export type GoalText = {
+    date: Timestamp;
     text: string;
 };
 
-export type goalTextsType = goalTextsObjType[];
+export type SelectedDaysType = SelectedDayType[] | null;
+export type GoalTextsType = GoalText[] | null;
 
-export type goalType = {
-    years: number[];
-    goalTexts?: goalTextsType;
-    selectedDaysInTheMonth: selectedDaysDataType;
-    totalSelectedDaysNumber: number;
-};
-export type goalTypeUpdatableFieldType = Partial<goalType>;
-
-export type goalsType = goalType[];
-
-export type goalDataType = {
+export interface GoalDataI {
     user?: string;
     createdAt: Timestamp;
     goalId: string;
-    years: number[];
-    goalTexts?: goalTextsType;
-    selectedDaysInTheMonth: selectedDaysDataType;
+    goalTexts: GoalTextsType;
+    selectedDays: SelectedDaysType;
     totalSelectedDaysNumber: number;
-};
+}
+export type GoalsDataType = GoalDataI[];
+
+export type GoalTypeUpdatableFieldType = Partial<
+    Omit<GoalDataI, 'user' | 'goalId'>
+>;
 
 export type ContactDataSetType = {
     email: string;

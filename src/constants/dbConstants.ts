@@ -1,9 +1,14 @@
-import { goalType } from '../types/dbTypes';
-import { todayMonth, todayYear } from './dateConstants';
+import { serverTimestamp, Timestamp } from 'firebase/firestore';
+import { auth } from '../database/firebase';
+import { GoalDataI } from '../types/dbTypes';
 
-export const defaultGoalData: goalType = {
-    years: [todayYear],
-    goalTexts: [],
-    selectedDaysInTheMonth: [{ year: todayYear, month: todayMonth, days: [] }],
-    totalSelectedDaysNumber: 0,
+export const getDefaultGoalData = (docId: string): GoalDataI => {
+    return {
+        user: auth.currentUser?.uid,
+        createdAt: Timestamp.now(),
+        goalId: docId,
+        goalTexts: null,
+        selectedDays: null,
+        totalSelectedDaysNumber: 0,
+    };
 };

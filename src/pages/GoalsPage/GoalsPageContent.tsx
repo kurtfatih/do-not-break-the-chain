@@ -3,17 +3,18 @@ import { Button, IconButton } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
+import { parseTheDate, timestampToDate } from '../../utils/dateUtils';
 import { Card } from '../../components/Card';
 import { SmallFont } from '../../components/Typography';
 import { breakPoints, greenColor } from '../../constants/stylesConstants';
-import { goalDataType } from '../../types/dbTypes';
+import { GoalDataI, GoalsDataType } from '../../types/dbTypes';
 import { truncateString } from '../../utils/stringUtils';
 
 interface GoalsPageContentProps {
-    allGoals: goalDataType[];
+    allGoals: GoalsDataType;
     addNewGoal: () => void;
     deleteGoal: (goalId: string) => void;
-    handleGoalClick: (goal: goalDataType) => void;
+    handleGoalClick: (goal: GoalDataI) => void;
 }
 
 const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
@@ -39,7 +40,14 @@ const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
                                 }}
                                 key={goal.goalId}
                             >
-                                <SmallFont>Year : {goal.years[0]}</SmallFont>
+                                <SmallFont>
+                                    Year:
+                                    {
+                                        parseTheDate(
+                                            timestampToDate(goal.createdAt),
+                                        ).year
+                                    }
+                                </SmallFont>
                                 <SmallFont style={{ marginTop: '5px' }}>
                                     Goal :
                                     {goal?.goalTexts &&

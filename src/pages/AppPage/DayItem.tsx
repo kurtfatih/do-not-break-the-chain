@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {
-    goalDataType,
-    goalTypeUpdatableFieldType,
-    selectedDaysDataType,
+    GoalDataI,
+    GoalTypeUpdatableFieldType,
+    SelectedDaysType,
 } from '../../types/dbTypes';
 import {
     breakPoints,
@@ -19,17 +19,7 @@ interface DayItemProps {
     isItToday: boolean;
     isOnTheFuture: boolean;
     isOnThePast: boolean;
-    updateGoal: (
-        fieldsToUpdate: goalTypeUpdatableFieldType,
-        activeGoalData: goalDataType,
-    ) => void;
-    getTheSelectedDaysInTheMonthViaYear: (
-        activeYear: number,
-        selectedDaysInTheMonth: selectedDaysDataType,
-    ) => number[] | undefined;
-    goalData: goalDataType;
-    activeYear: number;
-    activeIndexOfMonth: number;
+    handleClick: () => void;
 }
 
 const DayItem: React.FC<DayItemProps> = ({
@@ -38,73 +28,17 @@ const DayItem: React.FC<DayItemProps> = ({
     isItToday,
     isOnTheFuture,
     isOnThePast,
-    activeIndexOfMonth,
-    activeYear,
-    getTheSelectedDaysInTheMonthViaYear,
-    goalData,
-    updateGoal,
+    handleClick,
 }) => {
     const [isSelectedLocal, setIsSelectedLocal] = React.useState(false);
-    const selectDayOnClick = () => {
-        if (!isItToday || selectedDay) return;
-        //TODO
-        // isYearAndMonthHasAlreadySelectedDayBefore
-        // if not just push into selectedDaysInTheMonth
-        // if exist keep other same push the day inside days and push
-        const getTheSelectedDays = getTheSelectedDaysInTheMonthViaYear(
-            activeYear,
-            goalData.selectedDaysInTheMonth,
-        );
-        if (getTheSelectedDays) {
-            const newSelectedDays = {
-                year: activeYear,
-                month: activeIndexOfMonth,
-                days: [...getTheSelectedDays, day],
-            };
-            const newSelectedYearsArray =
-                replaceObjInsideArrayWithExistOneByYear(
-                    goalData.selectedDaysInTheMonth,
-                    newSelectedDays,
-                );
-
-            updateGoal(
-                {
-                    selectedDaysInTheMonth: newSelectedYearsArray,
-                    totalSelectedDaysNumber:
-                        goalData.totalSelectedDaysNumber + 1,
-                },
-                goalData,
-            );
-        } else {
-            updateGoal(
-                {
-                    selectedDaysInTheMonth: [
-                        ...goalData.selectedDaysInTheMonth,
-                        {
-                            year: activeYear,
-                            month: activeIndexOfMonth,
-                            days: [day],
-                        },
-                    ],
-                    totalSelectedDaysNumber:
-                        goalData.totalSelectedDaysNumber + 1,
-                },
-                goalData,
-            );
-        }
-
-        // const isYearAndMonthHasAlreadySelectedDayBefore =
-        //     goalData.selectedDaysInTheMonth.some(({ year }) =>
-        //     );
-
-        // const newSelectedDay = {year:activeYear,month:activeIndexOfMonth,days:[...goalData.selectedDaysInTheMonth,]}
-        // updateGoal({selectedDaysInTheMonth:[...goalData.selectedDaysInTheMonth,]})
-        return setIsSelectedLocal(true);
-    };
     return (
         <>
             <Day
-                onClick={selectDayOnClick}
+                onClick={() => {
+                    if (!isItToday || selectedDay) return;
+                    handleClick();
+                    setIsSelectedLocal(true);
+                }}
                 isSelected={selectedDay || (isItToday && isSelectedLocal)}
                 isSelecTable={isItToday && !selectedDay}
                 isOnThePast={isOnThePast}

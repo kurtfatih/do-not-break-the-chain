@@ -1,14 +1,18 @@
+import { Timestamp } from '@firebase/firestore';
+
 export const replaceObjInsideArrayWithExistOneByYear = <
-    T extends { year: number },
+    T extends { date: Timestamp },
 >(
     arr: T[],
     newObj: T,
 ): T[] => {
     const newElements = arr.map((obj) => {
-        const getIfGoalDataExist = obj.year === newObj.year;
+        console.log(obj.date.isEqual(newObj.date));
+        const getIfGoalDataExist = obj.date.isEqual(newObj.date);
         const newobj = getIfGoalDataExist ? newObj : obj;
         return newobj;
     });
+    console.log('durr', newElements);
     return newElements;
 };
 export const generateArrayFromNumber = (num: number) => {

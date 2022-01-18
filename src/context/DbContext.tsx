@@ -14,21 +14,21 @@ import React, { useRef } from 'react';
 
 import {
     ContactDataSetType,
-    goalDataType,
-    goalType,
-    goalTypeUpdatableFieldType,
+    GoalDataI,
+    GoalsDataType,
+    GoalTypeUpdatableFieldType,
 } from '../types/dbTypes';
 import { db } from '../database/firebase';
 import { useUserContext } from './UserContext';
-import { defaultGoalData } from '../constants/dbConstants';
+import { getDefaultGoalData } from '../constants/dbConstants';
 
 interface DbContextI {
-    goalsData: goalDataType[] | null;
+    goalsData: GoalsDataType | null;
     createNewGoalOnDb: () => void;
     deleteGoalOnDb: (id: string) => void;
     updateGoalOnDb: (
         goalId: string,
-        fieldsToUpdate: goalTypeUpdatableFieldType,
+        fieldsToUpdate: GoalTypeUpdatableFieldType,
     ) => Promise<void>;
     createNewContactOnDb: ({
         email,
@@ -38,7 +38,7 @@ interface DbContextI {
 }
 export const DbContextProvider: React.FC = ({ children }) => {
     const { user } = useUserContext();
-    const [goalsData, setGoalsData] = React.useState<goalDataType[] | null>(
+    const [goalsData, setGoalsData] = React.useState<GoalsDataType | null>(
         null,
     );
 
@@ -57,9 +57,9 @@ export const DbContextProvider: React.FC = ({ children }) => {
         const unsub = onSnapshot(
             collectionDocumentRefBasedOnUserId.current,
             (querySnapshot) => {
-                const goalsArr: goalDataType[] = [];
+                const goalsArr: GoalsDataType = [];
                 querySnapshot.forEach((doc) => {
-                    const docdata = doc.data() as goalDataType;
+                    const docdata = doc.data() as GoalDataI;
                     goalsArr.push(docdata);
                 });
                 setGoalsData(goalsArr);
@@ -74,16 +74,9 @@ export const DbContextProvider: React.FC = ({ children }) => {
         try {
             const collectionRef = collection(db, 'goals');
             const docRef = doc(collectionRef);
-            const newGoalData: goalType = {
-                ...defaultGoalData,
-            };
-            const newData: goalDataType = {
-                user: user?.uid,
-                createdAt: serverTimestamp() as Timestamp,
-                goalId: docRef.id,
-                ...newGoalData,
-            };
-            await setDoc(docRef, newData);
+            const defaultGoalData = getDefaultGoalData(docRef.id)
+            const newGoalData =defaultGoalData
+            await setDoc(docRef, newGoalData);
         } catch (err) {
             alert(err);
         }
@@ -100,7 +93,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
 
     const updateGoalOnDb = async (
         goalId: string,
-        fieldsToUpdate: goalTypeUpdatableFieldType,
+        fieldsToUpdate: GoalTypeUpdatableFieldType,
     ) => {
         const newDocRef = doc(db, 'goals', goalId);
         const newObj = { ...fieldsToUpdate };

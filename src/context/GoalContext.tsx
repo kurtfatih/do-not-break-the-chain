@@ -1,37 +1,34 @@
+import { Timestamp } from '@firebase/firestore';
 import React, { createContext, useContext } from 'react';
 
-import { todayDate } from '../constants/dateConstants';
+import { nowToDate } from '../constants/dateConstants';
 import {
-    goalDataType,
-    goalTextsType,
-    goalType,
-    goalTypeUpdatableFieldType,
-    selectedDaysDataType,
+    GoalDataI,
+    GoalsDataType,
+    GoalTextsType,
+    GoalTypeUpdatableFieldType,
+    SelectedDaysType,
 } from '../types/dbTypes';
-import { dateDiffInDays } from '../utils/dateUtils';
+import {
+    dateDiffInDays,
+    parseTheDate,
+    timestampToDate,
+} from '../utils/dateUtils';
 import { useDbContext } from './DbContext';
 
 interface GoalContextI {
-    getGoals: () => goalDataType[] | undefined;
+    getGoals: () => GoalsDataType | undefined;
     findTheGoal: (id: string) => boolean | undefined;
     isGoalExist: (id: string) => boolean;
-    findAndGetGoalById: (id?: string | undefined) => goalDataType | undefined;
-    goalData: goalType | undefined;
-    setGoalData: React.Dispatch<React.SetStateAction<goalType | undefined>>;
-    getTheGoalTextByActiveYear: (
-        activeYear: number,
-        goalTexts?: goalTextsType,
-    ) => string | undefined;
-    getTheSelectedDaysInTheMonthViaYear: (
-        activeYear: number,
-        selectedDaysInTheMonth: selectedDaysDataType,
-    ) => number[] | undefined;
+    findAndGetGoalById: (id?: string | undefined) => GoalDataI | undefined;
+    goalData: GoalDataI | undefined;
+    setGoalData: React.Dispatch<React.SetStateAction<GoalDataI | undefined>>;
     addNewGoal: () => void;
     // changeOnGoalText: (e: string) => void;
     deleteGoal: (goalId: string) => void;
     updateGoal: (
-        fieldsToUpdate: goalTypeUpdatableFieldType,
-        activeGoalData: goalDataType,
+        fieldsToUpdate: GoalTypeUpdatableFieldType,
+        goalId: string,
     ) => void;
     getTheMissedDay: (goalCreatedAt: Date, totalSelectedDays: number) => number;
 }
@@ -51,10 +48,11 @@ export function useGoalContext() {
 export const GoalContextProvider: React.FC = ({ children }) => {
     const { updateGoalOnDb, createNewGoalOnDb, goalsData, deleteGoalOnDb } =
         useDbContext();
-    const [goalData, setGoalData] = React.useState<goalType>();
+    const [goalData, setGoalData] = React.useState<GoalDataI>();
 
     const getGoals = React.useCallback(() => {
         if (!goalsData) return;
+        console.log('getgoalsfc', goalsData);
         return goalsData;
     }, [goalsData]);
     // update the goal
@@ -79,29 +77,6 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         [goalsData],
     );
 
-    const getTheGoalTextByActiveYear = (
-        activeYear: number,
-        goalTexts?: goalTextsType,
-    ) => {
-        if (goalTexts?.length === 0 || !goalTexts) return;
-        const goalTextObj = goalTexts.filter(({ year }) => year === activeYear);
-        if (goalTextObj.length === 0) return;
-        const goalText = goalTextObj[goalTextObj.length - 1].text;
-        return goalText;
-    };
-
-    const getTheSelectedDaysInTheMonthViaYear = React.useCallback(
-        (activeYear: number, selectedDaysInTheMonth: selectedDaysDataType) => {
-            const activeYearObj = selectedDaysInTheMonth.filter(
-                ({ year }) => year === activeYear,
-            );
-            if (activeYearObj.length === 0) return;
-            const days = activeYearObj[activeYearObj.length - 1].days;
-            return days;
-        },
-        [],
-    );
-
     const addNewGoal = React.useCallback(() => {
         if (!goalsData || goalsData.length > 11) return;
         createNewGoalOnDb();
@@ -113,16 +88,15 @@ export const GoalContextProvider: React.FC = ({ children }) => {
     );
 
     const updateGoal = (
-        fieldsToUpdate: goalTypeUpdatableFieldType,
-        activeGoalData: goalDataType,
+        fieldsToUpdate: GoalTypeUpdatableFieldType,
+        goalId: string,
     ) => {
-        const { goalId } = activeGoalData;
-        const obj: goalTypeUpdatableFieldType = { ...fieldsToUpdate };
+        const obj: GoalTypeUpdatableFieldType = { ...fieldsToUpdate };
         updateGoalOnDb(goalId, obj);
     };
     const getTheMissedDay = React.useCallback(
         (goalCreatedAt: Date, totalSelectedDays: number) => {
-            const diffDays = dateDiffInDays(todayDate, goalCreatedAt);
+            const diffDays = dateDiffInDays(nowToDate, goalCreatedAt);
             const missedDayCalculation = diffDays - totalSelectedDays;
             const missedDay =
                 missedDayCalculation < 0 ? 0 : missedDayCalculation;
@@ -146,8 +120,6 @@ export const GoalContextProvider: React.FC = ({ children }) => {
                 isGoalExist,
                 findAndGetGoalById,
                 setGoalData,
-                getTheGoalTextByActiveYear,
-                getTheSelectedDaysInTheMonthViaYear,
                 addNewGoal,
                 updateGoal,
                 getTheMissedDay,

@@ -1,3 +1,4 @@
+import { Timestamp } from '@firebase/firestore';
 export const getTheDateWithoutHours = (date: Date) => {
     return date.setHours(0, 0, 0, 0);
 };
@@ -86,4 +87,19 @@ export function dateDiffInDays(firstDate: Date, secondDate: Date) {
     );
 
     return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+export function dateToTimestamp(date: Date) {
+    const timestamp = Timestamp.fromDate(date);
+    return timestamp;
+}
+export function timestampToDate(timestamp: Timestamp) {
+    const date = timestamp.toDate();
+    return date;
+}
+export function checkIsTimestampsAreEquals(
+    timestamp1: Timestamp,
+    timestamp2: Timestamp,
+) {
+    const isEquals = timestamp1.isEqual(timestamp2);
+    return isEquals;
 }

@@ -3,23 +3,24 @@ import React from 'react';
 
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
+import { GoalText, GoalTextsType } from '../../types/dbTypes';
 import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
+import { dateToTimestamp } from '../../utils/dateUtils';
 
 const GoalNameForm: React.FC = () => {
-    const { activeYear, goalData } = useDateContext();
+    const { activeDate, goalData, getTheGoalTextByActiveDate } =
+        useDateContext();
     const goalNameInputRef = React.useRef('');
-    const { getTheGoalTextByActiveYear, updateGoal } = useGoalContext();
+    const { updateGoal } = useGoalContext();
     const [activeGoalName, setActiveGoalName] = React.useState<
         string | undefined
     >();
     React.useEffect(() => {
-        const goalName = getTheGoalTextByActiveYear(
-            activeYear,
-            goalData.goalTexts,
-        );
+        console.log('brom', process.env.NODE_ENV);
+        const goalName = getTheGoalTextByActiveDate();
         setActiveGoalName(goalName);
         goalNameInputRef.current = goalName ?? '';
-    }, [activeYear, getTheGoalTextByActiveYear, goalData.goalTexts]);
+    }, [getTheGoalTextByActiveDate, goalData.goalTexts]);
     const handleOnGoalNameChangeInput = React.useCallback(
         (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
             setActiveGoalName(e.target.value);
@@ -29,45 +30,25 @@ const GoalNameForm: React.FC = () => {
     const handleGoalNameInputOnBlur = React.useCallback(() => {
         if (!activeGoalName || goalNameInputRef.current === activeGoalName)
             return;
-        if (!goalData.goalTexts) return;
-        const isYearHasGoalNameAlready = getTheGoalTextByActiveYear(
-            activeYear,
-            goalData.goalTexts,
-        );
+        const newObj: GoalText = {
+            date: dateToTimestamp(activeDate),
+            text: activeGoalName,
+        };
 
-        if (isYearHasGoalNameAlready) {
-            const newObj = {
-                year: activeYear,
-                text: activeGoalName,
-            };
-            const newElement = replaceObjInsideArrayWithExistOneByYear(
-                goalData.goalTexts,
-                newObj,
-            );
-            updateGoal(
-                {
-                    goalTexts: newElement,
-                },
-                goalData,
-            );
-        } else {
-            updateGoal(
-                {
-                    goalTexts: [
-                        ...goalData.goalTexts,
-                        { year: activeYear, text: activeGoalName },
-                    ],
-                },
-                goalData,
-            );
-        }
-    }, [
-        activeGoalName,
-        activeYear,
-        getTheGoalTextByActiveYear,
-        goalData,
-        updateGoal,
-    ]);
+        const checkitOut: GoalTextsType = goalData.goalTexts
+            ? replaceObjInsideArrayWithExistOneByYear(
+                  goalData.goalTexts,
+                  newObj,
+              )
+            : [newObj];
+        console.log('checkiotOut', checkitOut);
+        updateGoal(
+            {
+                goalTexts: checkitOut,
+            },
+            goalData.goalId,
+        );
+    }, [activeDate, activeGoalName, goalData, updateGoal]);
     return (
         <FormControl variant="standard">
             <InputLabel

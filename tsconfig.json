@@ -4,8 +4,8 @@
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        // "noUnusedLocals": true,
+        // "noUnusedParameters": true,
         "paths": {
             "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
         },

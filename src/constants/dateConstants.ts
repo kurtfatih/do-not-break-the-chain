@@ -1,4 +1,5 @@
-import { parseTheDate } from '../utils/dateUtils';
+import { Timestamp } from 'firebase/firestore';
+import { parseTheDate, timestampToDate } from '../utils/dateUtils';
 
 export const months = [
     'January',
@@ -15,8 +16,9 @@ export const months = [
     'December',
 ];
 
-const todayDate = new Date();
-const { month, year, day } = parseTheDate(todayDate);
+const now = Timestamp.now();
+const nowToDate = timestampToDate(now);
+const { month, year, day } = parseTheDate(nowToDate);
 const todayMonth = month;
 const todayMonthName = months[todayMonth];
 const todayYear = year;
@@ -24,7 +26,8 @@ const todayDays = day;
 // const todayDateDays = getNumberOfDaysInMonth(todayDate);
 
 export {
-    todayDate,
+    now,
+    nowToDate,
     todayYear,
     todayMonthName,
     todayDays,
