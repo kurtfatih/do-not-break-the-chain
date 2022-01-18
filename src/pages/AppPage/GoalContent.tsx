@@ -29,7 +29,7 @@ export const GoalContent: React.FC = () => {
         activeYear,
         activeIndexOfMonth,
         isTheSelectedDayMatchWithTheDayInTheComponent,
-        generateNumberArrayByNumberOfDaysInActıveMonth,
+        generateNumberArrayByNumberOfDaysInActiveMonth,
         goalData,
     } = useDateContext();
 
@@ -37,7 +37,7 @@ export const GoalContent: React.FC = () => {
         useGoalContext();
 
     const arrayOfTheDayComponentsToProps =
-        generateNumberArrayByNumberOfDaysInActıveMonth.map((day) => {
+        generateNumberArrayByNumberOfDaysInActiveMonth.map((day) => {
             const isSelected =
                 isTheSelectedDayMatchWithTheDayInTheComponent(day);
             const activeDate = new Date(activeYear, activeIndexOfMonth, day);

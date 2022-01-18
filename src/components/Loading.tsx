@@ -7,7 +7,11 @@ export const Loading: React.FC = () => {
     return (
         <Dialog
             PaperProps={{
-                style: { backgroundColor: 'transparent', boxShadow: 'unset' },
+                style: {
+                    backgroundColor: 'transparent',
+                    boxShadow: 'unset',
+                    overflow: 'hidden',
+                },
             }}
             open={true}
         >

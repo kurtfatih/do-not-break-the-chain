@@ -22,7 +22,7 @@ interface DateContextI {
     isTheSelectedDayMatchWithTheDayInTheComponent: (
         day: number,
     ) => boolean | undefined;
-    generateNumberArrayByNumberOfDaysInActıveMonth: number[];
+    generateNumberArrayByNumberOfDaysInActiveMonth: number[];
 }
 
 const DateContext = createContext<DateContextI | null>(null);
@@ -46,15 +46,19 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
     const year = goalYear ?? todayYear;
     const month = goalMonth ? (goalMonth >= 12 ? 0 : goalMonth) : todayMonth;
     const { selectedDaysInTheMonth } = goalData;
-    const [activeMonthName, setActiveMonthName] = React.useState(months[month]);
-    const [activeIndexOfMonth, setActiveIndexOfMonth] = React.useState(month);
-    const [activeYear, setActiveYear] = React.useState(year);
+    const [activeMonthName, setActiveMonthName] = React.useState(
+        () => months[month],
+    );
+    const [activeIndexOfMonth, setActiveIndexOfMonth] = React.useState(
+        () => month,
+    );
+    const [activeYear, setActiveYear] = React.useState(() => year);
     const [
         activeNumberOfDaysInCurrentMonth,
         setActiveNumberOfDaysInCurrentMonth,
-    ] = React.useState(getNumberOfDaysInMonth(year, month));
+    ] = React.useState(() => getNumberOfDaysInMonth(year, month));
 
-    const generateNumberArrayByNumberOfDaysInActıveMonth = React.useMemo(() => {
+    const generateNumberArrayByNumberOfDaysInActiveMonth = React.useMemo(() => {
         const days = generateArrayFromNumber(activeNumberOfDaysInCurrentMonth);
         return days;
     }, [activeNumberOfDaysInCurrentMonth]);
@@ -131,7 +135,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
                 changeYear,
                 // whereIsTheDateCompareToTodayDate,
                 isTheSelectedDayMatchWithTheDayInTheComponent,
-                generateNumberArrayByNumberOfDaysInActıveMonth,
+                generateNumberArrayByNumberOfDaysInActiveMonth,
                 goalData,
             }}
         >
