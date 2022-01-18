@@ -9,7 +9,7 @@ import {
     FormTextAreaInput,
 } from '../../components/Form';
 import { SmallFont } from '../../components/Typography';
-import { FormButtonStyle } from '../../constants/stylesConstant';
+import { FormButtonStyle } from '../../constants/stylesConstants';
 
 interface ContactFormProps {
     isUserLoggedIn: boolean;

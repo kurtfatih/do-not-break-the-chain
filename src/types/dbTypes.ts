@@ -1,7 +1,5 @@
 import { Timestamp } from '@firebase/firestore';
 
-import { todayMonth, todayYear } from './dateConstant';
-
 export type selectedDaysDataType = {
     year: number;
     month: number;
@@ -40,24 +38,3 @@ export type ContactDataSetType = {
     name?: string | null;
     message: string;
 };
-
-export const defaultGoalData: goalType = {
-    years: [todayYear],
-    goalTexts: [],
-    selectedDaysInTheMonth: [{ year: todayYear, month: todayMonth, days: [] }],
-    totalSelectedDaysNumber: 0,
-};
-// const daysv2 = dummyConstantData.goals.map((goalObj) =>
-//   goalObj.monthanddays.find(({ year }) => year === 2022)
-// )
-// years: [2022, 2021],
-// goalTexts: [
-//   { year: 2022, text: "" },
-//   { year: 2021, text: "" }
-// ],
-// monthanddays: [
-//   { year: 2022, month: 0, days: [1, 2, 3] },
-//   { year: 2022, month: 1, days: [1, 2, 3, 4, 5] },
-//   { year: 2021, month: 0, days: [1, 2, 3] },
-//   { year: 2021, month: 1, days: [1, 2, 3, 4, 5] }
-// ]

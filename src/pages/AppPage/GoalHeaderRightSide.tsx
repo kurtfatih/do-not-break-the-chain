@@ -7,8 +7,8 @@ import { Card, CardInsideContainer } from '../../components/Card';
 import { Image } from '../../components/Image';
 import { LargeFont, SmallFont } from '../../components/Typography';
 import { UnOrderedList } from '../../components/UnOrderedList';
-import { months } from '../../constants/dateConstant';
-import { breakPoints, greenColor } from '../../constants/stylesConstant';
+import { months } from '../../constants/dateConstants';
+import { breakPoints, greenColor } from '../../constants/stylesConstants';
 import { useDateContext } from '../../context/DateContext';
 
 const GoalHeaderRightSide: React.FC = () => {

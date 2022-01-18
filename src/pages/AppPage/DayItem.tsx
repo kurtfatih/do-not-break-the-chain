@@ -5,12 +5,12 @@ import {
     goalDataType,
     goalTypeUpdatableFieldType,
     selectedDaysDataType,
-} from '../../constants/dbconstant';
+} from '../../types/dbTypes';
 import {
     breakPoints,
     greenColor,
     orangeColor,
-} from '../../constants/stylesConstant';
+} from '../../constants/stylesConstants';
 import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
 
 interface DayItemProps {

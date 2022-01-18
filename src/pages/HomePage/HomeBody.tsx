@@ -5,7 +5,7 @@ import MouseCursor from '../../assets/mousecursor.png';
 import { Image } from '../../components/Image';
 import { SmallFont } from '../../components/Typography';
 import { UnOrderedList } from '../../components/UnOrderedList';
-import { todayDays } from '../../constants/dateConstant';
+import { todayDays } from '../../constants/dateConstants';
 import { useNavigateTo } from '../../hooks/useNavigateTo';
 import { generateArrayFromNumber } from '../../utils/arrUtils';
 import { Day } from '../AppPage/DayItem';

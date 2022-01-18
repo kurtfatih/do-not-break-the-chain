@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext } from 'react';
 
-import { months, todayMonth, todayYear } from '../constants/dateConstant';
-import { goalDataType } from '../constants/dbconstant';
+import { months, todayMonth, todayYear } from '../constants/dateConstants';
+import { goalDataType } from '../types/dbTypes';
 import { generateArrayFromNumber } from '../utils/arrUtils';
 import { getNumberOfDaysInMonth } from '../utils/dateUtils';
 

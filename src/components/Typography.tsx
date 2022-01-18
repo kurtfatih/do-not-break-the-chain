@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { breakPoints } from '../constants/stylesConstant';
+import { breakPoints } from '../constants/stylesConstants';
 
 const Font = styled.p<{
     color?: string;

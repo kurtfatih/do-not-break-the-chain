@@ -1,13 +1,13 @@
 import React, { createContext, useContext } from 'react';
 
-import { todayDate } from '../constants/dateConstant';
+import { todayDate } from '../constants/dateConstants';
 import {
     goalDataType,
     goalTextsType,
     goalType,
     goalTypeUpdatableFieldType,
     selectedDaysDataType,
-} from '../constants/dbconstant';
+} from '../types/dbTypes';
 import { dateDiffInDays } from '../utils/dateUtils';
 import { useDbContext } from './DbContext';
 
