@@ -1,8 +1,8 @@
 import React, { createContext, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { months, todayMonth, todayYear } from '../constants/dateConstants';
-import { GoalDataI, GoalTextsType, SelectedDaysType } from '../types/dbTypes';
+import { months } from '../constants/dateConstants';
+import { GoalDataI, SelectedDaysType } from '../types/dbTypes';
 import { generateArrayFromNumber } from '../utils/arrUtils';
 import {
     getNumberOfDaysInMonth,
@@ -65,12 +65,6 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
     const currentYear = goalYearParamToNumber;
     const currentMonth = goalMonthParamToNumber;
 
-    // console.log(
-    //     currentYear,
-    //     goalMonthParamToNumber,
-    //     currentMonth,
-    //     goalMonthParamToNumber >= 12,
-    // );
     const [activeMonthName, setActiveMonthName] = React.useState(
         () => months[currentMonth],
     );
@@ -89,7 +83,6 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         () => new Date(activeYear, activeIndexOfMonth),
     );
 
-    // console.log(activeDate, activeYear, activeIndexOfMonth, activeMonthName);
     const generateNumberArrayByNumberOfDaysInActiveMonth = React.useMemo(() => {
         const days = generateArrayFromNumber(activeNumberOfDaysInCurrentMonth);
         return days;
@@ -144,7 +137,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
                 indexOfMonth,
             );
             setActiveNumberOfDaysInCurrentMonth(newNumberOfDaysInActiveMonth);
-            setActiveDate(new Date(activeYear,indexOfMonth))
+            setActiveDate(new Date(activeYear, indexOfMonth));
         },
         [activeYear],
     );
@@ -156,7 +149,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
                 activeIndexOfMonth,
             );
             setActiveNumberOfDaysInCurrentMonth(newNumberOfDaysInActiveMonth);
-            setActiveDate(new Date(year,activeIndexOfMonth))
+            setActiveDate(new Date(year, activeIndexOfMonth));
         },
         [activeIndexOfMonth],
     );

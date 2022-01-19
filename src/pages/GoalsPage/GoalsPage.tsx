@@ -40,7 +40,6 @@ export const GoalsPage: React.FC = () => {
     //     }`,
     // ),
     const allGoals = getGoals;
-    console.log(allGoals);
     if (!allGoals) return null;
 
     return (

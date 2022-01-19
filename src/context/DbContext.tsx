@@ -1,16 +1,14 @@
 import {
-    Timestamp,
     collection,
     deleteDoc,
     doc,
     onSnapshot,
     orderBy,
     query,
-    serverTimestamp,
     setDoc,
     where,
 } from 'firebase/firestore';
-import React, { useRef } from 'react';
+import React from 'react';
 
 import {
     ContactDataSetType,
@@ -55,7 +53,6 @@ export const DbContextProvider: React.FC = ({ children }) => {
 
     // listen user's goals collection datas.
     React.useEffect(() => {
-        console.log('this runned');
         const collectionDocumentRefBasedOnUserId = query(
             collection(db, collectionName),
             where('user', '==', user ? user.uid : ''),
@@ -64,7 +61,6 @@ export const DbContextProvider: React.FC = ({ children }) => {
         const unsub = onSnapshot(
             collectionDocumentRefBasedOnUserId,
             (querySnapshot) => {
-                console.log('this runned');
                 const goalsArr: GoalsDataType = [];
                 querySnapshot.forEach((doc) => {
                     const docdata = doc.data() as GoalDataI;

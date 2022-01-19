@@ -2,16 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {
-    GoalDataI,
-    GoalTypeUpdatableFieldType,
-    SelectedDaysType,
-} from '../../types/dbTypes';
-import {
     breakPoints,
     greenColor,
     orangeColor,
 } from '../../constants/stylesConstants';
-import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
 
 interface DayItemProps {
     day: number;

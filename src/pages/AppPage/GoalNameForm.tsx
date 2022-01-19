@@ -3,8 +3,7 @@ import React from 'react';
 
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
-import { GoalText, GoalTextsType } from '../../types/dbTypes';
-import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
+import { GoalText } from '../../types/dbTypes';
 import { dateToTimestamp } from '../../utils/dateUtils';
 
 const GoalNameForm: React.FC = () => {
@@ -16,7 +15,6 @@ const GoalNameForm: React.FC = () => {
         string | undefined
     >();
     React.useEffect(() => {
-        console.log('brom', process.env.NODE_ENV);
         const goalName = getTheGoalTextByActiveDate();
         setActiveGoalName(goalName);
         goalNameInputRef.current = goalName ?? '';
@@ -62,7 +60,6 @@ const GoalNameForm: React.FC = () => {
                 goalData.goalId,
             );
         }
-        // console.log('check', isItAlreadyThere);
         // const checkitOut: GoalTextsType = goalData.goalTexts
         //     ? replaceObjInsideArrayWithExistOneByYear(
         //           [...goalData.goalTexts, newObj],

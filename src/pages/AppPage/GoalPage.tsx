@@ -3,7 +3,6 @@ import { useParams } from 'react-router';
 
 import { DateContextProvider } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
-import { parseTheDate, timestampToDate } from '../../utils/dateUtils';
 import { GoalSections } from './GoalSections';
 
 const GoalPage: React.FC = () => {

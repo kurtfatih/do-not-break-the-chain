@@ -8,7 +8,6 @@ import { Routes } from './Routes';
 import { WithDbContextProvider } from './WithWrappers';
 
 export const Router: React.FC = () => {
-    console.log('Router rendered ');
     return (
         <WithDbContextProvider>
             <BrowserRouter>

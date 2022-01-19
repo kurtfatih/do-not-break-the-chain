@@ -1,4 +1,4 @@
-import { serverTimestamp, Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { auth } from '../database/firebase';
 import { GoalDataI } from '../types/dbTypes';
 

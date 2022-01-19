@@ -9,12 +9,9 @@ import { nowToDate } from '../../constants/dateConstants';
 import { breakPoints } from '../../constants/stylesConstants';
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
-import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
 import {
     dateToTimestamp,
     locationOfTheDateCompareToOtherDate,
-    parseTheDate,
-    timestampToDate,
 } from '../../utils/dateUtils';
 import DayItem from './DayItem';
 
@@ -37,9 +34,7 @@ export const GoalContent: React.FC = () => {
         isTheSelectedDayMatchWithTheDayInTheComponent,
         generateNumberArrayByNumberOfDaysInActiveMonth,
         goalData,
-        getTheSelectedDaysInMonthByActiveDate,
     } = useDateContext();
-    console.log('aa', getTheSelectedDaysInMonthByActiveDate());
     const { updateGoal } = useGoalContext();
 
     const handleSelectDayOnClick = (dateOfTheDay: Date) => {

@@ -1,19 +1,12 @@
-import { Timestamp } from '@firebase/firestore';
 import React, { createContext, useContext } from 'react';
 
 import { nowToDate } from '../constants/dateConstants';
 import {
     GoalDataI,
     GoalsDataType,
-    GoalTextsType,
     GoalTypeUpdatableFieldType,
-    SelectedDaysType,
 } from '../types/dbTypes';
-import {
-    dateDiffInDays,
-    parseTheDate,
-    timestampToDate,
-} from '../utils/dateUtils';
+import { dateDiffInDays } from '../utils/dateUtils';
 import { useDbContext } from './DbContext';
 
 interface GoalContextI {
@@ -52,7 +45,6 @@ export const GoalContextProvider: React.FC = ({ children }) => {
 
     const getGoals = React.useMemo(() => {
         if (!goalsData) return;
-        console.log('getgoalsfc', goalsData);
         return goalsData;
     }, [goalsData]);
     // update the goal

@@ -10,7 +10,6 @@ import { NotFound404 } from '../pages/NotFound404';
 import { WithGoalContextProvider, WithPrivateRoute } from './WithWrappers';
 
 export const Routes: React.FC = () => {
-    console.log('Routes rendered ');
     return (
         <Switch>
             <Route path="*" element={<NotFound404 />} />
