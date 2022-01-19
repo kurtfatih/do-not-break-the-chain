@@ -1,3 +1,4 @@
+import { Timestamp } from '@firebase/firestore';
 import { Grid } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
@@ -34,17 +35,17 @@ export const GoalContent: React.FC = () => {
         isTheSelectedDayMatchWithTheDayInTheComponent,
         generateNumberArrayByNumberOfDaysInActiveMonth,
         goalData,
+        getTheSelectedDayTextByDate,
     } = useDateContext();
     const { updateGoal } = useGoalContext();
 
-    const handleSelectDayOnClick = (dateOfTheDay: Date) => {
+    const handleSelectDayOnClick = (timestampOfTheDay: Timestamp) => {
         // if (!isItToday || selectedDay) return;
         //TODO
         // isYearAndMonthHasAlreadySelectedDayBefore
         // if not just push into selectedDaysInTheMonth
         // if exist keep other same push the day inside days and push
-        const dateOfTheDayDateToTimestamp = dateToTimestamp(dateOfTheDay);
-        const newObj = { date: dateOfTheDayDateToTimestamp, note: '' };
+        const newObj = { date: timestampOfTheDay, note: '' };
         updateGoal(
             {
                 selectedDays: goalData.selectedDays
@@ -69,19 +70,27 @@ export const GoalContent: React.FC = () => {
             const isSelected =
                 isTheSelectedDayMatchWithTheDayInTheComponent(day);
             const dayDate = new Date(activeYear, activeIndexOfMonth, day);
-            const handleClick = () => handleSelectDayOnClick(dayDate);
+            const dayTimestamp = dateToTimestamp(dayDate);
+            const handleClick = () => handleSelectDayOnClick(dayTimestamp);
             const {
                 isTheDateOnTheFuture,
                 isTheDateOnThePast,
                 isTheDatesAreExactSame,
             } = locationOfTheDateCompareToOtherDate(nowToDate, dayDate);
+
+            const selectedDayNote = isSelected
+                ? getTheSelectedDayTextByDate(dayTimestamp)
+                : '';
+
             return {
                 isSelected,
                 isTheDateOnTheFuture,
                 isTheDateOnThePast,
                 isTheDatesAreExactSame,
                 day,
+                dayTimestamp,
                 handleClick,
+                selectedDayNote,
             };
         });
 
@@ -104,12 +113,16 @@ export const GoalContent: React.FC = () => {
                                 isTheDatesAreExactSame,
                                 day,
                                 handleClick,
+                                selectedDayNote,
+                                dayTimestamp,
                             },
                             index,
                         ) => (
                             <DayItem
                                 key={index}
+                                selectedDayNote={selectedDayNote}
                                 selectedDay={isSelected}
+                                dayTimestamp={dayTimestamp}
                                 day={day}
                                 isItToday={isTheDatesAreExactSame}
                                 isOnThePast={isTheDateOnThePast}

@@ -6,12 +6,17 @@ export const replaceObjInsideArrayWithExistOneByYear = <
     arr: T[],
     newObj: T,
 ): T[] => {
-    const newElements = arr.map((obj) => {
-        const getIfGoalDataExist = obj.date.isEqual(newObj.date);
-        const newobj = getIfGoalDataExist ? newObj : obj;
-        return newobj;
-    });
-    return newElements;
+    const indexOfSameOne = arr.findIndex(({ date }) =>
+        date.isEqual(newObj.date),
+    );
+    let newGoalTextsCopy = [...arr];
+    if (indexOfSameOne < 0) {
+        newGoalTextsCopy = [...newGoalTextsCopy, newObj];
+        //there is goal name before for active year
+    } else {
+        newGoalTextsCopy[indexOfSameOne] = newObj;
+    }
+    return newGoalTextsCopy;
 };
 export const generateArrayFromNumber = (num: number) => {
     const arr = Array.from(Array(num).keys()).map((x) => x + 1);

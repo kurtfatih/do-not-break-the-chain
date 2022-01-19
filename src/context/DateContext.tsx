@@ -1,3 +1,4 @@
+import { Timestamp } from '@firebase/firestore';
 import React, { createContext, useCallback, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -26,10 +27,10 @@ interface DateContextI {
     changeYear: (year: number) => void;
 
     getTheGoalTextByActiveDate: () => string | undefined;
-    isTheSelectedDayMatchWithTheDayInTheComponent: (
-        day: number,
-    ) => boolean | undefined;
-
+    isTheSelectedDayMatchWithTheDayInTheComponent: (day: number) => boolean;
+    getTheSelectedDayTextByDate: (
+        selectedDayTimestamp: Timestamp,
+    ) => string | undefined;
     getTheSelectedDaysInMonthByActiveDate: () => SelectedDaysType | undefined;
     generateNumberArrayByNumberOfDaysInActiveMonth: number[];
 }
@@ -116,10 +117,18 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         return selectedDays;
     }, [activeDate, selectedDays]);
 
+    const getTheSelectedDayTextByDate = (selectedDayTimestamp: Timestamp) => {
+        if (!goalData.selectedDays) return;
+        const selectedday = goalData.selectedDays.find(({ date }) =>
+            date.isEqual(selectedDayTimestamp),
+        );
+        const selectedDayText = selectedday?.note;
+        return selectedDayText;
+    };
     const isTheSelectedDayMatchWithTheDayInTheComponent = React.useCallback(
         (day: number) => {
             const pureDaySelected = getTheSelectedDaysInMonthByActiveDate();
-            if (!pureDaySelected) return;
+            if (!pureDaySelected) return false;
             const isDaySelected = pureDaySelected.some(
                 ({ date }) => parseTheDate(timestampToDate(date)).day === day,
             );
@@ -178,6 +187,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
                 goalData,
                 getTheGoalTextByActiveDate,
                 getTheSelectedDaysInMonthByActiveDate,
+                getTheSelectedDayTextByDate,
             }}
         >
             {children}

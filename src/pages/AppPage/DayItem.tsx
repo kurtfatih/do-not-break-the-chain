@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,35 +7,57 @@ import {
     greenColor,
     orangeColor,
 } from '../../constants/stylesConstants';
+import { SelectedDayDialog } from './SelectedDayDialog';
 
 interface DayItemProps {
     day: number;
-    selectedDay?: boolean;
+    dayTimestamp: Timestamp;
+    selectedDay: boolean;
     isItToday: boolean;
     isOnTheFuture: boolean;
     isOnThePast: boolean;
     handleClick: () => void;
+    selectedDayNote?: string;
 }
 
 const DayItem: React.FC<DayItemProps> = ({
     day,
+    dayTimestamp,
     selectedDay,
     isItToday,
     isOnTheFuture,
     isOnThePast,
     handleClick,
+    selectedDayNote,
 }) => {
-    const [isSelectedLocal, setIsSelectedLocal] = React.useState(false);
+    // const [isSelectedLocal, setIsSelectedLocal] = React.useState(false);
+    const [openSelectedDayDialog, setOpenSelectedDayDialog] =
+        React.useState(false);
+    const handleOpenSelectedDayDialog = () => {
+        setOpenSelectedDayDialog(true);
+    };
+    const handleCloseSelectedDayDialog = () => {
+        setOpenSelectedDayDialog(false);
+    };
     return (
         <>
             <Day
                 onClick={() => {
-                    if (!isItToday || selectedDay) return;
-                    handleClick();
-                    setIsSelectedLocal(true);
+                    if (!isItToday && !selectedDay) return;
+                    if (isItToday && selectedDay) {
+                        return handleOpenSelectedDayDialog();
+                    }
+                    if (!isItToday && selectedDay) {
+                        return handleOpenSelectedDayDialog();
+                    }
+                    if (isItToday && !selectedDay) {
+                        handleClick();
+                        // setIsSelectedLocal(true);
+                        return;
+                    }
                 }}
-                isSelected={selectedDay || (isItToday && isSelectedLocal)}
-                isSelecTable={isItToday && !selectedDay}
+                isSelected={selectedDay}
+                isSelecTable={isItToday || selectedDay}
                 isOnThePast={isOnThePast}
                 isOnTheFuture={isOnTheFuture}
             >
@@ -52,6 +75,12 @@ const DayItem: React.FC<DayItemProps> = ({
                     <Line color={selectedDay ? greenColor : orangeColor} />
                 </div>
             ) : null}
+            <SelectedDayDialog
+                handleCloseSelectedDayDialog={handleCloseSelectedDayDialog}
+                openSelectedDayDialog={openSelectedDayDialog}
+                selectedDayTimestamp={dayTimestamp}
+                value={selectedDayNote}
+            />
         </>
     );
 };
