@@ -1,11 +1,13 @@
 import { Grid } from '@mui/material';
 import React from 'react';
+import styled from 'styled-components';
 
 import { HomeBody } from './HomeBody';
 import { HomeFooter } from './HomeFooter';
 import { HomeHeader } from './HomeHeader';
 
 export const HomePage: React.FC = () => {
+    console.log('Home page rendered');
     return (
         <Grid
             id="home-page-container"

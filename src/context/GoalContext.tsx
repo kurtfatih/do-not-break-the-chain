@@ -17,7 +17,7 @@ import {
 import { useDbContext } from './DbContext';
 
 interface GoalContextI {
-    getGoals: () => GoalsDataType | undefined;
+    getGoals: GoalsDataType | undefined;
     findTheGoal: (id: string) => boolean | undefined;
     isGoalExist: (id: string) => boolean;
     findAndGetGoalById: (id?: string | undefined) => GoalDataI | undefined;
@@ -50,7 +50,7 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         useDbContext();
     const [goalData, setGoalData] = React.useState<GoalDataI>();
 
-    const getGoals = React.useCallback(() => {
+    const getGoals = React.useMemo(() => {
         if (!goalsData) return;
         console.log('getgoalsfc', goalsData);
         return goalsData;

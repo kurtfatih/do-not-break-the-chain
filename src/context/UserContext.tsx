@@ -98,19 +98,6 @@ export const UserContextProvider: React.FC = ({ children }) => {
     //     }
     // };
     React.useEffect(() => {
-        setIsUserLoading(true);
-        const unlisten = auth.onAuthStateChanged((authUser) => {
-            // localStorage.setItem('user', authUser.uid);
-            setUser(authUser);
-            setIsUserLoading(false);
-            // setUserLoading(false);
-        });
-        return () => {
-            unlisten();
-        };
-    }, []);
-    React.useEffect(() => {
-        setIsUserLoading(true);
         const unlisten = auth.onAuthStateChanged((authUser) => {
             // localStorage.setItem('user', authUser.uid);
             setUser(authUser);

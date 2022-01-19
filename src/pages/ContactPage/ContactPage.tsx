@@ -15,6 +15,7 @@ import { ContactForm } from './ContactForm';
 //     align-items: center;
 // `;
 export const ContactPage: React.FC = () => {
+    console.log('contact page');
     const { isUserLoggedIn, user, isUserLoading } = useUserContext();
     const { createNewContactOnDb } = useDbContext();
     const emailInputRef = React.useRef<HTMLInputElement>(null);

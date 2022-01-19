@@ -3,13 +3,12 @@ import React from 'react';
 import { GoalDataI } from '../../types/dbTypes';
 import { useGoalContext } from '../../context/GoalContext';
 import GoalsPageContent from './GoalsPageContent';
-import { useNavigateTo } from '../../hooks/useNavigateTo';
 import { parseTheDate, timestampToDate } from '../../utils/dateUtils';
+import { useNavigate } from 'react-router-dom';
 
 export const GoalsPage: React.FC = () => {
     const { getGoals, addNewGoal, deleteGoal } = useGoalContext();
-
-    const { goTo } = useNavigateTo();
+    const navigate = useNavigate();
     const handleGoalClick = (goal: GoalDataI) => {
         const { goalId, createdAt, selectedDays } = goal;
         if (!createdAt) return;
@@ -29,7 +28,7 @@ export const GoalsPage: React.FC = () => {
             : '';
 
         const link = `/goal/${goalId}/${selectedDayYearOrCreatedYear}${selectedDayOrNull}`;
-        goTo(link);
+        navigate(link);
     };
     // const navigate = useNavigate();
 
@@ -40,7 +39,7 @@ export const GoalsPage: React.FC = () => {
     //             : ''
     //     }`,
     // ),
-    const allGoals = getGoals();
+    const allGoals = getGoals;
     console.log(allGoals);
     if (!allGoals) return null;
 

@@ -44,26 +44,27 @@ const collectionName =
         ? 'goals-dev'
         : 'goals-test';
 
+const contactCollectionRef = collection(db, 'contact');
+
 export const DbContextProvider: React.FC = ({ children }) => {
     const { user } = useUserContext();
     const [goalsData, setGoalsData] = React.useState<GoalsDataType | null>(
         null,
     );
     //ref that collections document ref query by user id
-    const collectionDocumentRefBasedOnUserId = useRef(
-        query(
-            collection(db, collectionName),
-            where('user', '==', user ? user.uid : ''),
-            orderBy('createdAt', 'asc'),
-        ),
-    );
-    const contactCollectionRef = collection(db, 'contact');
 
     // listen user's goals collection datas.
     React.useEffect(() => {
+        console.log('this runned');
+        const collectionDocumentRefBasedOnUserId = query(
+            collection(db, collectionName),
+            where('user', '==', user ? user.uid : ''),
+            orderBy('createdAt', 'asc'),
+        );
         const unsub = onSnapshot(
-            collectionDocumentRefBasedOnUserId.current,
+            collectionDocumentRefBasedOnUserId,
             (querySnapshot) => {
+                console.log('this runned');
                 const goalsArr: GoalsDataType = [];
                 querySnapshot.forEach((doc) => {
                     const docdata = doc.data() as GoalDataI;
@@ -75,14 +76,14 @@ export const DbContextProvider: React.FC = ({ children }) => {
         return () => {
             unsub();
         };
-    }, []);
+    }, [user]);
 
     const createNewGoalOnDb = async () => {
         try {
             const collectionRef = collection(db, collectionName);
             const docRef = doc(collectionRef);
-            const defaultGoalData = getDefaultGoalData(docRef.id)
-            const newGoalData =defaultGoalData
+            const defaultGoalData = getDefaultGoalData(docRef.id);
+            const newGoalData = defaultGoalData;
             await setDoc(docRef, newGoalData);
         } catch (err) {
             alert(err);
