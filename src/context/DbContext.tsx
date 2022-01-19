@@ -79,7 +79,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
 
     const createNewGoalOnDb = async () => {
         try {
-            const collectionRef = collection(db, 'goals');
+            const collectionRef = collection(db, collectionName);
             const docRef = doc(collectionRef);
             const newGoalData: goalType = {
                 ...defaultGoalData,
@@ -97,7 +97,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
     };
 
     const deleteGoalOnDb = async (id: string) => {
-        const newDocRef = doc(db, 'goals', id);
+        const newDocRef = doc(db, collectionName, id);
         try {
             await deleteDoc(newDocRef);
         } catch (error) {
@@ -109,7 +109,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
         goalId: string,
         fieldsToUpdate: goalTypeUpdatableFieldType,
     ) => {
-        const newDocRef = doc(db, 'goals', goalId);
+        const newDocRef = doc(db, collectionName, goalId);
         const newObj = { ...fieldsToUpdate };
         try {
             await setDoc(newDocRef, newObj, { merge: true });
