@@ -36,16 +36,23 @@ interface DbContextI {
         message,
     }: ContactDataSetType) => Promise<void>;
 }
+
+const collectionName =
+    process.env.NODE_ENV === 'production'
+        ? 'goals'
+        : process.env.NODE_ENV === 'development'
+        ? 'goals-dev'
+        : 'goals-test';
+
 export const DbContextProvider: React.FC = ({ children }) => {
     const { user } = useUserContext();
     const [goalsData, setGoalsData] = React.useState<GoalsDataType | null>(
         null,
     );
-
     //ref that collections document ref query by user id
     const collectionDocumentRefBasedOnUserId = useRef(
         query(
-            collection(db, 'goals'),
+            collection(db, collectionName),
             where('user', '==', user ? user.uid : ''),
             orderBy('createdAt', 'asc'),
         ),
@@ -72,7 +79,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
 
     const createNewGoalOnDb = async () => {
         try {
-            const collectionRef = collection(db, 'goals');
+            const collectionRef = collection(db, collectionName);
             const docRef = doc(collectionRef);
             const defaultGoalData = getDefaultGoalData(docRef.id)
             const newGoalData =defaultGoalData
@@ -83,7 +90,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
     };
 
     const deleteGoalOnDb = async (id: string) => {
-        const newDocRef = doc(db, 'goals', id);
+        const newDocRef = doc(db, collectionName, id);
         try {
             await deleteDoc(newDocRef);
         } catch (error) {
@@ -95,7 +102,7 @@ export const DbContextProvider: React.FC = ({ children }) => {
         goalId: string,
         fieldsToUpdate: GoalTypeUpdatableFieldType,
     ) => {
-        const newDocRef = doc(db, 'goals', goalId);
+        const newDocRef = doc(db, collectionName, goalId);
         const newObj = { ...fieldsToUpdate };
         try {
             await setDoc(newDocRef, newObj, { merge: true });
