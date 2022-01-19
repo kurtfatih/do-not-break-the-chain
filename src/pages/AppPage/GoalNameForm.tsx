@@ -35,19 +35,48 @@ const GoalNameForm: React.FC = () => {
             text: activeGoalName,
         };
 
-        const checkitOut: GoalTextsType = goalData.goalTexts
-            ? replaceObjInsideArrayWithExistOneByYear(
-                  goalData.goalTexts,
-                  newObj,
-              )
-            : [newObj];
-        console.log('checkiotOut', checkitOut);
-        updateGoal(
-            {
-                goalTexts: checkitOut,
-            },
-            goalData.goalId,
-        );
+        if (goalData.goalTexts) {
+            const indexOfSameOne = goalData.goalTexts.findIndex(({ date }) =>
+                date.isEqual(newObj.date),
+            );
+
+            let newGoalTextsCopy = [...goalData.goalTexts];
+            if (indexOfSameOne < 0) {
+                newGoalTextsCopy = [...newGoalTextsCopy, newObj];
+                //there is goal name before for active year
+            } else {
+                newGoalTextsCopy[indexOfSameOne] = newObj;
+            }
+
+            return updateGoal(
+                {
+                    goalTexts: newGoalTextsCopy,
+                },
+                goalData.goalId,
+            );
+        } else {
+            return updateGoal(
+                {
+                    goalTexts: [newObj],
+                },
+                goalData.goalId,
+            );
+        }
+        // console.log('check', isItAlreadyThere);
+        // const checkitOut: GoalTextsType = goalData.goalTexts
+        //     ? replaceObjInsideArrayWithExistOneByYear(
+        //           [...goalData.goalTexts, newObj],
+        //           newObj,
+        //       )
+        //     : [newObj];
+        // return updateGoal(
+        //     {
+        //         goalTexts: checkitOut,
+        //     },
+        //     goalData.goalId,
+        // );
+        // } else {
+        // }
     }, [activeDate, activeGoalName, goalData, updateGoal]);
     return (
         <FormControl variant="standard">
