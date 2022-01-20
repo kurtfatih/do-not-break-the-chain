@@ -1,5 +1,5 @@
 import { Timestamp } from '@firebase/firestore';
-import { checkIsTimestampsAreEquals } from './dateUtils';
+import { dateUtils } from './dateUtils';
 
 export const replaceObjInsideArrayWithExistOneByYear = <
     T extends { date: Timestamp },
@@ -8,7 +8,7 @@ export const replaceObjInsideArrayWithExistOneByYear = <
     newObj: T,
 ): T[] => {
     const newElements = arr.map((obj) => {
-        const getIfGoalDataExist = checkIsTimestampsAreEquals(
+        const getIfGoalDataExist = dateUtils.checkIsTimestampsAreEquals(
             obj.date,
             newObj.date,
         );

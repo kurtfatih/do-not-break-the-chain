@@ -6,7 +6,7 @@ import {
     GoalsDataType,
     GoalTypeUpdatableFieldType,
 } from '../types/dbTypes';
-import { dateDiffInDays } from '../utils/dateUtils';
+import { dateUtils } from '../utils/dateUtils';
 import { useDbContext } from './DbContext';
 
 interface GoalContextI {
@@ -88,7 +88,7 @@ export const GoalContextProvider: React.FC = ({ children }) => {
     };
     const getTheMissedDay = React.useCallback(
         (goalCreatedAt: Date, totalSelectedDays: number) => {
-            const diffDays = dateDiffInDays(nowToDate, goalCreatedAt);
+            const diffDays = dateUtils.dateDiffInDays(nowToDate, goalCreatedAt);
             const missedDayCalculation = diffDays - totalSelectedDays;
             const missedDay =
                 missedDayCalculation < 0 ? 0 : missedDayCalculation;

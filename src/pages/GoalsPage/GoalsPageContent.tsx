@@ -3,7 +3,7 @@ import { Button, IconButton } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
-import { parseTheDate, timestampToDate } from '../../utils/dateUtils';
+import { dateUtils } from '../../utils/dateUtils';
 import { Card } from '../../components/Card';
 import { SmallFont } from '../../components/Typography';
 import { breakPoints, greenColor } from '../../constants/stylesConstants';
@@ -43,8 +43,10 @@ const GoalsPageContent: React.FC<GoalsPageContentProps> = ({
                                 <SmallFont>
                                     Year:
                                     {
-                                        parseTheDate(
-                                            timestampToDate(goal.createdAt),
+                                        dateUtils.parseTheDate(
+                                            dateUtils.timestampToDate(
+                                                goal.createdAt,
+                                            ),
                                         ).year
                                     }
                                 </SmallFont>

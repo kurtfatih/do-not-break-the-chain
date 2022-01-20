@@ -9,10 +9,7 @@ import { nowToDate } from '../../constants/dateConstants';
 import { breakPoints } from '../../constants/stylesConstants';
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
-import {
-    dateToTimestamp,
-    locationOfTheDateCompareToOtherDate,
-} from '../../utils/dateUtils';
+import { dateUtils } from '../../utils/dateUtils';
 import DayItem from './DayItem';
 
 export const DaysCardContainer = styled(Card)`
@@ -43,7 +40,8 @@ export const GoalContent: React.FC = () => {
         // isYearAndMonthHasAlreadySelectedDayBefore
         // if not just push into selectedDaysInTheMonth
         // if exist keep other same push the day inside days and push
-        const dateOfTheDayDateToTimestamp = dateToTimestamp(dateOfTheDay);
+        const dateOfTheDayDateToTimestamp =
+            dateUtils.dateToTimestamp(dateOfTheDay);
         const newObj = { date: dateOfTheDayDateToTimestamp, note: '' };
         updateGoal(
             {
@@ -74,7 +72,10 @@ export const GoalContent: React.FC = () => {
                 isTheDateOnTheFuture,
                 isTheDateOnThePast,
                 isTheDatesAreExactSame,
-            } = locationOfTheDateCompareToOtherDate(nowToDate, dayDate);
+            } = dateUtils.locationOfTheDateCompareToOtherDate(
+                nowToDate,
+                dayDate,
+            );
             return {
                 isSelected,
                 isTheDateOnTheFuture,

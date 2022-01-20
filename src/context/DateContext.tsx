@@ -4,11 +4,7 @@ import { useParams } from 'react-router-dom';
 import { months } from '../constants/dateConstants';
 import { GoalDataI, SelectedDaysType } from '../types/dbTypes';
 import { generateArrayFromNumber } from '../utils/arrUtils';
-import {
-    getNumberOfDaysInMonth,
-    parseTheDate,
-    timestampToDate,
-} from '../utils/dateUtils';
+import { dateUtils } from '../utils/dateUtils';
 import { checkIfTwoNumberAreEqual } from '../utils/numberUtils';
 
 interface DateContextProviderProps {
@@ -53,15 +49,15 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
     const { year, month } = useParams(); //goal id year month from router
     const { selectedDays, createdAt, goalTexts } = goalData;
 
-    const goalCreatedAtToDate = timestampToDate(createdAt);
+    const goalCreatedAtToDate = dateUtils.timestampToDate(createdAt);
     const goalYearParamToNumber = year
         ? Number(year)
-        : parseTheDate(goalCreatedAtToDate).year; // convert year string to num
+        : dateUtils.parseTheDate(goalCreatedAtToDate).year; // convert year string to num
     const goalMonthParamToNumber = month
         ? Number(month) >= 12 || Number(month) < 0
             ? 0
             : Number(month)
-        : parseTheDate(goalCreatedAtToDate).month; // convert month string to num
+        : dateUtils.parseTheDate(goalCreatedAtToDate).month; // convert month string to num
     const currentYear = goalYearParamToNumber;
     const currentMonth = goalMonthParamToNumber;
 
@@ -76,7 +72,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         activeNumberOfDaysInCurrentMonth,
         setActiveNumberOfDaysInCurrentMonth,
     ] = React.useState(() =>
-        getNumberOfDaysInMonth(activeYear, activeIndexOfMonth),
+        dateUtils.getNumberOfDaysInMonth(activeYear, activeIndexOfMonth),
     );
 
     const [activeDate, setActiveDate] = React.useState(
@@ -92,8 +88,8 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         if (goalTexts?.length === 0 || !goalTexts) return;
         const goalTextObj = goalTexts.filter(
             ({ date }) =>
-                parseTheDate(date.toDate()).year ===
-                parseTheDate(activeDate).year,
+                dateUtils.parseTheDate(date.toDate()).year ===
+                dateUtils.parseTheDate(activeDate).year,
         );
         if (goalTextObj.length === 0) return;
         const goalText = goalTextObj[goalTextObj.length - 1].text;
@@ -101,10 +97,12 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
     };
 
     const getTheSelectedDaysInMonthByActiveDate = React.useCallback(() => {
-        const parsedActiveDate = parseTheDate(activeDate);
+        const parsedActiveDate = dateUtils.parseTheDate(activeDate);
         if (!selectedDays || selectedDays.length < 0) return;
         const selectedDaysInMonth = selectedDays.filter((obj) => {
-            const { month, year } = parseTheDate(timestampToDate(obj.date));
+            const { month, year } = dateUtils.parseTheDate(
+                dateUtils.timestampToDate(obj.date),
+            );
             if (
                 checkIfTwoNumberAreEqual(month, parsedActiveDate.month) &&
                 checkIfTwoNumberAreEqual(year, parsedActiveDate.year)
@@ -121,7 +119,9 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
             const pureDaySelected = getTheSelectedDaysInMonthByActiveDate();
             if (!pureDaySelected) return;
             const isDaySelected = pureDaySelected.some(
-                ({ date }) => parseTheDate(timestampToDate(date)).day === day,
+                ({ date }) =>
+                    dateUtils.parseTheDate(dateUtils.timestampToDate(date))
+                        .day === day,
             );
             return isDaySelected;
         },
@@ -132,10 +132,8 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         (indexOfMonth: number) => {
             setActiveMonthName(months[indexOfMonth]);
             setActiveIndexOfMonth(indexOfMonth);
-            const newNumberOfDaysInActiveMonth = getNumberOfDaysInMonth(
-                activeYear,
-                indexOfMonth,
-            );
+            const newNumberOfDaysInActiveMonth =
+                dateUtils.getNumberOfDaysInMonth(activeYear, indexOfMonth);
             setActiveNumberOfDaysInCurrentMonth(newNumberOfDaysInActiveMonth);
             setActiveDate(new Date(activeYear, indexOfMonth));
         },
@@ -144,10 +142,8 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
     const changeYear = useCallback(
         (year: number) => {
             setActiveYear(year);
-            const newNumberOfDaysInActiveMonth = getNumberOfDaysInMonth(
-                year,
-                activeIndexOfMonth,
-            );
+            const newNumberOfDaysInActiveMonth =
+                dateUtils.getNumberOfDaysInMonth(year, activeIndexOfMonth);
             setActiveNumberOfDaysInCurrentMonth(newNumberOfDaysInActiveMonth);
             setActiveDate(new Date(year, activeIndexOfMonth));
         },
