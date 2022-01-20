@@ -4,7 +4,7 @@ import React from 'react';
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
 import { GoalText } from '../../types/dbTypes';
-import { dateToTimestamp } from '../../utils/dateUtils';
+import {  checkIsTimestampsAreEquals, dateToTimestamp } from '../../utils/dateUtils';
 
 const GoalNameForm: React.FC = () => {
     const { activeDate, goalData, getTheGoalTextByActiveDate } =
@@ -35,7 +35,7 @@ const GoalNameForm: React.FC = () => {
 
         if (goalData.goalTexts) {
             const indexOfSameOne = goalData.goalTexts.findIndex(({ date }) =>
-                date.isEqual(newObj.date),
+                checkIsTimestampsAreEquals(date,newObj.date)
             );
 
             let newGoalTextsCopy = [...goalData.goalTexts];
