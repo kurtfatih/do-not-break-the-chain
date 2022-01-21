@@ -74,16 +74,16 @@ export const SelectedDayDialog: React.FC<SelectedDayDialogProps> = ({
             onClose={handleCloseSelectedDayDialog}
             PaperProps={{
                 style: {
-                    flexBasis: '25%',
+                    flexBasis: '50%',
                     backgroundColor: 'transparent',
-                    height: '30%',
+                    height: '50%',
                 },
             }}
         >
             <Card style={{ height: '100%', display: 'flex' }}>
                 <FormTextAreaInput
                     value={activeValue}
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', padding: '10px' }}
                     onChange={(e) => handleOnSelectedDayNoteChangeInput(e)}
                     ref={FormTextAreaInputRef}
                     placeholder="Type your selected day note here"
