@@ -8,11 +8,11 @@ export const replaceObjInsideArrayWithExistOneByYear = <
     newObj: T,
 ): T[] => {
     const newElements = arr.map((obj) => {
-        const getIfGoalDataExist = dateUtils.checkIsTimestampsAreEquals(
+        const isEquals = dateUtils.checkIsTimestampsAreEquals(
             obj.date,
             newObj.date,
         );
-        const newobj = getIfGoalDataExist ? newObj : obj;
+        const newobj = isEquals ? newObj : obj;
         return newobj;
     });
     return newElements;

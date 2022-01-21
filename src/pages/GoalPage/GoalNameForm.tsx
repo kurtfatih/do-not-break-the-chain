@@ -37,7 +37,6 @@ const GoalNameForm: React.FC = () => {
             const indexOfSameOne = goalData.goalTexts.findIndex(({ date }) =>
                 dateUtils.checkIsTimestampsAreEquals(date, newObj.date),
             );
-
             let newGoalTextsCopy = [...goalData.goalTexts];
             if (indexOfSameOne < 0) {
                 newGoalTextsCopy = [...newGoalTextsCopy, newObj];
@@ -45,7 +44,6 @@ const GoalNameForm: React.FC = () => {
             } else {
                 newGoalTextsCopy[indexOfSameOne] = newObj;
             }
-
             return updateGoal(
                 {
                     goalTexts: newGoalTextsCopy,
