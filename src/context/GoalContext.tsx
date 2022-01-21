@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import React, { createContext, useContext } from 'react';
 
 import { nowToDate } from '../constants/dateConstants';
@@ -23,7 +24,10 @@ interface GoalContextI {
         fieldsToUpdate: GoalTypeUpdatableFieldType,
         goalId: string,
     ) => void;
-    getTheMissedDay: (goalCreatedAt: Date, totalSelectedDays: number) => number;
+    getTheMissedDay: (
+        goalCreatedAt: Timestamp,
+        totalSelectedDays: number,
+    ) => number;
 }
 
 const GoalContext = createContext<GoalContextI | null>(null);
@@ -87,11 +91,19 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         updateGoalOnDb(goalId, obj);
     };
     const getTheMissedDay = React.useCallback(
-        (goalCreatedAt: Date, totalSelectedDays: number) => {
-            const diffDays = dateUtils.dateDiffInDays(nowToDate, goalCreatedAt);
-            const missedDayCalculation = diffDays - totalSelectedDays;
-            const missedDay =
-                missedDayCalculation < 0 ? 0 : missedDayCalculation;
+        (goalCreatedAt: Timestamp, totalSelectedDays: number) => {
+            const goalCreatedAtTimestampToDate =
+                dateUtils.timestampToDate(goalCreatedAt);
+
+            const diffDays = dateUtils.dateDiffInDays(
+                nowToDate,
+                goalCreatedAtTimestampToDate,
+            );
+
+            const missedDayCalculation =
+                diffDays === 0 ? 0 : Math.abs(diffDays) - totalSelectedDays + 1;
+
+            const missedDay = missedDayCalculation;
             return missedDay;
             {
                 /* missed day calculatin

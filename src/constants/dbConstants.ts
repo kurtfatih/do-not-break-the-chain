@@ -9,6 +9,5 @@ export const getDefaultGoalData = (docId: string): GoalDataI => {
         goalId: docId,
         goalTexts: null,
         selectedDays: null,
-        totalSelectedDaysNumber: 0,
     };
 };

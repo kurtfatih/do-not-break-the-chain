@@ -48,7 +48,6 @@ export const GoalContent: React.FC = () => {
                 selectedDays: goalData.selectedDays
                     ? [...goalData.selectedDays, newObj]
                     : [newObj],
-                totalSelectedDaysNumber: goalData.totalSelectedDaysNumber + 1,
             },
             goalData.goalId,
         );

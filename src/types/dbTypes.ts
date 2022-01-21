@@ -16,7 +16,6 @@ export interface GoalDataI {
     goalId: string;
     goalTexts: GoalTextsType;
     selectedDays: SelectedDaysType;
-    totalSelectedDaysNumber: number;
 }
 export type GoalsDataType = GoalDataI[];
 
