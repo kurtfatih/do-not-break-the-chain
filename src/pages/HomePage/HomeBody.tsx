@@ -8,8 +8,8 @@ import { SmallFont } from '../../components/Typography';
 import { UnOrderedList } from '../../components/UnOrderedList';
 import { todayDays } from '../../constants/dateConstants';
 import { generateArrayFromNumber } from '../../utils/arrUtils';
-import { Day } from '../AppPage/DayItem';
-import { DaysCardContainer } from '../AppPage/GoalContent';
+import { Day } from '../GoalPage/DayItem';
+import { DaysCardContainer } from '../GoalPage/GoalContent';
 
 // const HomeBodyContainer = styled.div`
 //     display: flex;

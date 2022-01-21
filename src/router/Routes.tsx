@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
 
-import GoalPage from '../pages/AppPage/GoalPage';
+import GoalPage from '../pages/GoalPage/GoalPage';
 import { ContactPage } from '../pages/ContactPage/ContactPage';
 import GoalsPage from '../pages/GoalsPage/GoalsPage';
 import { HomePage } from '../pages/HomePage/HomePage';

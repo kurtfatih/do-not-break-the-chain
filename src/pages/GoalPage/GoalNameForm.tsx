@@ -4,8 +4,10 @@ import React from 'react';
 import { useDateContext } from '../../context/DateContext';
 import { useGoalContext } from '../../context/GoalContext';
 import { GoalText } from '../../types/dbTypes';
-import { replaceObjInsideArrayWithExistOneByYear } from '../../utils/arrUtils';
-import { dateToTimestamp } from '../../utils/dateUtils';
+import {
+    checkIsTimestampsAreEquals,
+    dateToTimestamp,
+} from '../../utils/dateUtils';
 
 const GoalNameForm: React.FC = () => {
     const { activeDate, goalData, getTheGoalTextByActiveDate } =
@@ -35,13 +37,19 @@ const GoalNameForm: React.FC = () => {
         };
 
         if (goalData.goalTexts) {
-            const res = replaceObjInsideArrayWithExistOneByYear(
-                goalData.goalTexts,
-                newObj,
+            const indexOfSameOne = goalData.goalTexts.findIndex(({ date }) =>
+                checkIsTimestampsAreEquals(date, newObj.date),
             );
+            let newGoalTextsCopy = [...goalData.goalTexts];
+            if (indexOfSameOne < 0) {
+                newGoalTextsCopy = [...newGoalTextsCopy, newObj];
+                //there is goal name before for active year
+            } else {
+                newGoalTextsCopy[indexOfSameOne] = newObj;
+            }
             return updateGoal(
                 {
-                    goalTexts: res,
+                    goalTexts: newGoalTextsCopy,
                 },
                 goalData.goalId,
             );
