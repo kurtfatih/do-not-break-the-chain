@@ -72,14 +72,23 @@ export const SelectedDayDialog: React.FC<SelectedDayDialogProps> = ({
             open={openSelectedDayDialog}
             onBlur={handleOnBlur}
             onClose={handleCloseSelectedDayDialog}
-            PaperComponent={Card}
+            PaperProps={{
+                style: {
+                    flexBasis: '25%',
+                    backgroundColor: 'transparent',
+                    height: '30%',
+                },
+            }}
         >
-            <FormTextAreaInput
-                value={activeValue}
-                onChange={(e) => handleOnSelectedDayNoteChangeInput(e)}
-                ref={FormTextAreaInputRef}
-                placeholder="Type your selected day note here"
-            />
+            <Card style={{ height: '100%', display: 'flex' }}>
+                <FormTextAreaInput
+                    value={activeValue}
+                    style={{ width: '100%' }}
+                    onChange={(e) => handleOnSelectedDayNoteChangeInput(e)}
+                    ref={FormTextAreaInputRef}
+                    placeholder="Type your selected day note here"
+                />
+            </Card>
         </Dialog>
     );
 };
