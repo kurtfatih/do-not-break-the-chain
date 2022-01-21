@@ -81,20 +81,15 @@ export const dateUtils = Object.freeze({
     },
 
     // a and b are javascript Date objects
-    dateDiffInDays: (firstDate: Date, secondDate: Date) => {
+    dateDiffInDays(firstDate: Date, secondDate: Date) {
         // Discard the time and time-zone information.
-        const utc1 = Date.UTC(
-            firstDate.getFullYear(),
-            firstDate.getMonth(),
-            firstDate.getDate(),
-        );
-        const utc2 = Date.UTC(
-            secondDate.getFullYear(),
-            secondDate.getMonth(),
-            secondDate.getDate(),
-        );
-
-        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+        const utc1 = new Date(this.getTheDateWithoutHours(firstDate)).getTime();
+        const utc2 = new Date(
+            this.getTheDateWithoutHours(secondDate),
+        ).getTime();
+        const abstract = utc2 - utc1;
+        const result = abstract / _MS_PER_DAY;
+        return result;
     },
     dateToTimestamp: (date: Date) => {
         const timestamp = Timestamp.fromDate(date);
