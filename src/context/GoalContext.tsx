@@ -6,6 +6,7 @@ import {
     GoalDataI,
     GoalsDataType,
     GoalTypeUpdatableFieldType,
+    SelectedDaysType,
 } from '../types/dbTypes';
 import { dateUtils } from '../utils/dateUtils';
 import { useDbContext } from './DbContext';
@@ -26,7 +27,7 @@ interface GoalContextI {
     ) => void;
     getTheMissedDay: (
         goalCreatedAt: Timestamp,
-        totalSelectedDays: number,
+        selectedDays: SelectedDaysType,
     ) => number;
 }
 
@@ -91,26 +92,61 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         updateGoalOnDb(goalId, obj);
     };
     const getTheMissedDay = React.useCallback(
-        (goalCreatedAt: Timestamp, totalSelectedDays: number) => {
+        (goalCreatedAt: Timestamp, selectedDays: SelectedDaysType) => {
             const goalCreatedAtTimestampToDate =
                 dateUtils.timestampToDate(goalCreatedAt);
 
+            const totalNumberOfSelectedDays = selectedDays
+                ? selectedDays.length
+                : 0;
+            const lastItemDateInSelectedDays = selectedDays
+                ? dateUtils.dateToTimestamp(
+                      new Date(
+                          dateUtils.getTheDateWithoutHours(
+                              dateUtils.timestampToDate(
+                                  selectedDays[selectedDays.length - 1].date,
+                              ),
+                          ),
+                      ),
+                  )
+                : 1;
+            const addPlustOneOrNot =
+                lastItemDateInSelectedDays !== 1
+                    ? dateUtils.checkIsTimestampsAreEquals(
+                          lastItemDateInSelectedDays,
+                          dateUtils.dateToTimestamp(
+                              new Date(
+                                  dateUtils.getTheDateWithoutHours(nowToDate),
+                              ),
+                          ),
+                      )
+                        ? 1
+                        : 0
+                    : 0;
             const diffDays = dateUtils.dateDiffInDays(
                 nowToDate,
                 goalCreatedAtTimestampToDate,
             );
+            // console.log('diffdays', Math.abs(diffDays));
+
+            console.log(
+                'one day befroe ',
+                diffDays,
+                lastItemDateInSelectedDays,
+                dateUtils.dateToTimestamp(
+                    new Date(dateUtils.getTheDateWithoutHours(nowToDate)),
+                ),
+                addPlustOneOrNot,
+                totalNumberOfSelectedDays,
+            );
 
             const missedDayCalculation =
-                diffDays === 0 ? 0 : Math.abs(diffDays) - totalSelectedDays + 1;
+                Math.abs(diffDays) -
+                totalNumberOfSelectedDays +
+                addPlustOneOrNot;
 
             const missedDay = missedDayCalculation;
             return missedDay;
-            {
-                /* missed day calculatin
-                                  current date -   document created date  - total selected days
-
-                                */
-            }
         },
         [],
     );

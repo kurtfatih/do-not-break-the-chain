@@ -75,10 +75,7 @@ export const GoalsPage: React.FC = () => {
                                     ? truncateString(goalTexts[0].text, 8)
                                     : ''
                             }
-                            missedDay={getTheMissedDay(
-                                createdAt,
-                                selectedDays ? selectedDays.length : 0,
-                            )}
+                            missedDay={getTheMissedDay(createdAt, selectedDays)}
                         />
                     ),
                 )}
