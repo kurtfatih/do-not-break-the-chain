@@ -83,7 +83,7 @@ const GoalItemMain = styled.div`
 
 {
     /* missed day calculatin
-                                  current date -   document created date  - total selected days
+                                  current date -1 -   document created date  - total selected days
 
                                 */
 }

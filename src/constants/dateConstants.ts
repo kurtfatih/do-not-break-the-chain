@@ -18,6 +18,9 @@ export const months = [
 
 const now = Timestamp.now();
 const nowToDate = dateUtils.timestampToDate(now);
+const nowDateCopy = new Date(nowToDate);
+const after1Date = new Date(nowDateCopy.setDate(nowDateCopy.getDate() + 1));
+// console.log('now to date', nowToDate);
 const { month, year, day } = dateUtils.parseTheDate(nowToDate);
 const todayMonth = month;
 const todayMonthName = months[todayMonth];
@@ -31,6 +34,7 @@ export {
     todayYear,
     todayMonthName,
     todayDays,
+    after1Date,
     // todayDateDays,
     todayMonth,
 };
