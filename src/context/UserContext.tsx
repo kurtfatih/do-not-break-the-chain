@@ -10,6 +10,7 @@ import {
 import React, { createContext, useContext } from 'react';
 
 import { auth } from '../database/firebase';
+import { UserRequiredInput } from '../types/dbTypes';
 
 interface UserContextI {
     user: User | null;
@@ -18,13 +19,12 @@ interface UserContextI {
     signOutCurrentAuth: () => Promise<void>;
     isUserLoggedIn: () => boolean;
     signInWithPasswordAndEmail: (
-        email: string,
-        password: string,
+        emailAndPassword: UserRequiredInput,
     ) => Promise<void>;
     createUserWithEmailPasswordAndDisplayName: (
-        email: string,
-        password: string,
-        displayName: string,
+        emailAndPassword: UserRequiredInput & {
+            displayName: string;
+        },
     ) => Promise<void>;
 }
 
@@ -45,8 +45,8 @@ export const UserContextProvider: React.FC = ({ children }) => {
     const [isUserLoading, setIsUserLoading] = React.useState<boolean>(true);
     const isUserLoggedIn = () => (user ? true : false);
 
-    const signOutCurrentAuth = () =>
-        signOut(auth)
+    const signOutCurrentAuth = async () => {
+        await signOut(auth)
             .then((res) => {
                 return res;
             })
@@ -54,6 +54,7 @@ export const UserContextProvider: React.FC = ({ children }) => {
                 alert(error);
                 // An error happened.
             });
+    };
 
     const signInWithGoogle = async () => {
         const googleProvider = new GoogleAuthProvider();
@@ -64,21 +65,23 @@ export const UserContextProvider: React.FC = ({ children }) => {
             alert(error);
         }
     };
-    const signInWithPasswordAndEmail = async (
-        email: string,
-        password: string,
-    ) => {
+
+    const signInWithPasswordAndEmail = async ({
+        email,
+        password,
+    }: UserRequiredInput) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
             alert(error);
         }
     };
-    const createUserWithEmailPasswordAndDisplayName = async (
-        email: string,
-        password: string,
-        displayName: string,
-    ) => {
+
+    const createUserWithEmailPasswordAndDisplayName = async ({
+        email,
+        password,
+        displayName,
+    }: UserRequiredInput & { displayName: string }) => {
         try {
             const { user } = await createUserWithEmailAndPassword(
                 auth,
@@ -90,19 +93,12 @@ export const UserContextProvider: React.FC = ({ children }) => {
             alert(error);
         }
     };
-    // const signUpWithPassword = async (email: string, password: string) => { const emailProvider = new EmailAuthProvider()
-    //     try {
-    //         await signInWithPopup(auth, emailProvider);
-    //     } catch (error) {
-    //         alert(error);
-    //     }
-    // };
+
+    // listen for any changes on auth
     React.useEffect(() => {
         const unlisten = auth.onAuthStateChanged((authUser) => {
-            // localStorage.setItem('user', authUser.uid);
             setUser(authUser);
             setIsUserLoading(false);
-            // setUserLoading(false);
         });
         return () => {
             unlisten();

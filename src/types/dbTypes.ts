@@ -28,3 +28,7 @@ export type ContactDataSetType = {
     name?: string | null;
     message: string;
 };
+export type UserRequiredInput = {
+    email: string;
+    password: string;
+};

@@ -28,7 +28,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
         const email = emailInputRef.current.value;
         const password = passwordInputRef.current.value;
         if (!email || !password) return;
-        signInWithPasswordAndEmail(email, password);
+        signInWithPasswordAndEmail({ email, password });
     };
     return (
         <>

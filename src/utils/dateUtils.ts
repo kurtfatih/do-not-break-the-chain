@@ -107,11 +107,3 @@ export const dateUtils = Object.freeze({
         return isEquals;
     },
 });
-
-// export const getOneDayBeforeDate = (date: Date) => {
-//     console.log('which date comes here', date);
-//     const oneDayBeforeDate = date.setDate(date.getDate() - 1);
-
-//     console.log('which date output here', date);
-//     return new Date(oneDayBeforeDate);
-// };

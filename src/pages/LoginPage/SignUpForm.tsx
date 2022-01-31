@@ -22,6 +22,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
     const emailInputRef = React.useRef<HTMLInputElement>(null);
     const passwordInputRef = React.useRef<HTMLInputElement>(null);
     const displayNameInputRef = React.useRef<HTMLInputElement>(null);
+
     const handleSignUpClick = () => {
         if (
             !emailInputRef.current ||
@@ -33,8 +34,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
         const password = passwordInputRef.current.value;
         const displayName = displayNameInputRef.current.value;
         if (!email || !password) return;
-        createUserWithEmailPasswordAndDisplayName(email, password, displayName);
+        createUserWithEmailPasswordAndDisplayName({
+            email,
+            password,
+            displayName,
+        });
     };
+
     return (
         <>
             <FormContainer
