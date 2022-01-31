@@ -127,18 +127,6 @@ export const GoalContextProvider: React.FC = ({ children }) => {
                 nowToDate,
                 goalCreatedAtTimestampToDate,
             );
-            // console.log('diffdays', Math.abs(diffDays));
-
-            console.log(
-                'one day befroe ',
-                diffDays,
-                lastItemDateInSelectedDays,
-                dateUtils.dateToTimestamp(
-                    new Date(dateUtils.getTheDateWithoutHours(nowToDate)),
-                ),
-                addPlustOneOrNot,
-                totalNumberOfSelectedDays,
-            );
 
             const missedDayCalculation =
                 Math.abs(diffDays) -
