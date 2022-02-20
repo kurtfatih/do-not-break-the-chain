@@ -112,7 +112,7 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
             }
         });
         if (selectedDaysInMonth.length === 0) return;
-        return selectedDays;
+        return selectedDaysInMonth;
     }, [activeDate, selectedDays]);
 
     const getTheSelectedDayTextByDate = (selectedDayTimestamp: Timestamp) => {

@@ -33,29 +33,33 @@ const DayItem: React.FC<DayItemProps> = ({
     // const [isSelectedLocal, setIsSelectedLocal] = React.useState(false);
     const [openSelectedDayDialog, setOpenSelectedDayDialog] =
         React.useState(false);
+
     const handleOpenSelectedDayDialog = () => {
         setOpenSelectedDayDialog(true);
     };
+
     const handleCloseSelectedDayDialog = () => {
         setOpenSelectedDayDialog(false);
+    };
+
+    const dayItemOnClick = () => {
+        if (!isItToday && !selectedDay) return;
+        if (isItToday && selectedDay) {
+            return handleOpenSelectedDayDialog();
+        }
+        if (!isItToday && selectedDay) {
+            return handleOpenSelectedDayDialog();
+        }
+        if (isItToday && !selectedDay) {
+            handleClick();
+            // setIsSelectedLocal(true);
+            return;
+        }
     };
     return (
         <>
             <Day
-                onClick={() => {
-                    if (!isItToday && !selectedDay) return;
-                    if (isItToday && selectedDay) {
-                        return handleOpenSelectedDayDialog();
-                    }
-                    if (!isItToday && selectedDay) {
-                        return handleOpenSelectedDayDialog();
-                    }
-                    if (isItToday && !selectedDay) {
-                        handleClick();
-                        // setIsSelectedLocal(true);
-                        return;
-                    }
-                }}
+                onClick={dayItemOnClick}
                 isSelected={selectedDay}
                 isSelecTable={isItToday || selectedDay}
                 isOnThePast={isOnThePast}

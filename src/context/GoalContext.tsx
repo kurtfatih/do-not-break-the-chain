@@ -91,6 +91,7 @@ export const GoalContextProvider: React.FC = ({ children }) => {
         const obj: GoalTypeUpdatableFieldType = { ...fieldsToUpdate };
         updateGoalOnDb(goalId, obj);
     };
+
     const getTheMissedDay = React.useCallback(
         (goalCreatedAt: Timestamp, selectedDays: SelectedDaysType) => {
             const goalCreatedAtTimestampToDate =

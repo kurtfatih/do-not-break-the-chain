@@ -4,7 +4,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Card } from '../../components/Card';
-// import { ContentBody } from '../../components/Layouts';
 import { UnOrderedList } from '../../components/UnOrderedList';
 import { nowToDate } from '../../constants/dateConstants';
 import { breakPoints } from '../../constants/stylesConstants';
@@ -25,6 +24,7 @@ export const DaysCardContainer = styled(Card)`
         max-height: 300px;
     } */
 `;
+
 export const GoalContent: React.FC = () => {
     const {
         activeYear,
@@ -37,11 +37,6 @@ export const GoalContent: React.FC = () => {
     const { updateGoal } = useGoalContext();
 
     const handleSelectDayOnClick = (timestampOfTheDay: Timestamp) => {
-        // if (!isItToday || selectedDay) return;
-        //TODO
-        // isYearAndMonthHasAlreadySelectedDayBefore
-        // if not just push into selectedDaysInTheMonth
-        // if exist keep other same push the day inside days and push
         const newObj = { date: timestampOfTheDay, note: '' };
         updateGoal(
             {
@@ -52,14 +47,6 @@ export const GoalContent: React.FC = () => {
             goalData.goalId,
         );
     };
-
-    // const isYearAndMonthHasAlreadySelectedDayBefore =
-    //     goalData.selectedDaysInTheMonth.some(({ year }) =>
-    //     );
-
-    // const newSelectedDay = {year:activeYear,month:activeIndexOfMonth,days:[...goalData.selectedDaysInTheMonth,]}
-    // updateGoal({selectedDaysInTheMonth:[...goalData.selectedDaysInTheMonth,]})
-    // return setIsSelectedLocal(true);
 
     const arrayOfTheDayComponentsToProps =
         generateNumberArrayByNumberOfDaysInActiveMonth.map((day) => {
