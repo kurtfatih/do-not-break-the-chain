@@ -158,14 +158,6 @@ export const DateContextProvider: React.FC<DateContextProviderProps> = ({
         },
         [activeIndexOfMonth],
     );
-    // React.useEffect(() => {
-    //     setActiveDate(new Date(activeYear, activeIndexOfMonth, 0));
-    // }, [changeYear, changeMonth, activeYear, activeIndexOfMonth]);
-    // const whereIsTheDateCompareToTodayDate = (dateWillCompareToToday: Date) => {
-    //   // const { isOnTheFuture, isOnThePast, isOnTheTime } =
-    //   //   locationOfTheDateCompareToOtherDate(todayDate, dateWillCompareToToday)
-    //   return { isOnTheFuture, isOnThePast, isOnTheTime }
-    // }
 
     return (
         <DateContext.Provider
